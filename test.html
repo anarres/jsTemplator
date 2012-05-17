@@ -1,0 +1,107 @@
+<html>
+<head>
+<style>
+body {
+    padding: 20px 100px;
+    font-family: Helvetica;
+    color: #505050;
+
+}
+h1 {
+    font-size: 2.5em;
+    font-weight: normal;
+}
+p {
+    padding: 5px 0px;
+}
+</style>
+
+<script>
+/* This is the javascript way of defining a class 
+http://www.w3schools.com/js/js_objects.asp */
+function replacement(niceName, shortName, startString, endString, replacementValue) {
+    this.niceName=niceName;
+    this.shortName=shortName;
+    this.startString=startString;
+    this.endString=endString;
+    this.replacementValue="Replacement value not yet defined.";
+}
+
+/* This will go in a separate file so it can basically act like a config file */
+var replacements = new Array(
+    new replacement('Page title', 'pageTitle', '<!--TITLESTART-->','<!--TITLEEND-->'),
+    new replacement('Page content', 'pageContent', 'PAGESTART','PAGEEND'),
+    new replacement('Footer', 'footer','FOOTSTART','FOOTEND')
+);
+
+/* This will also be a separate file */
+var basicTemplate = " \
+<html><h1><!--TITLESTART--><!--TITLEEND--></h1> \
+PAGESTART PAGEEND \
+<p>FOOTSTART FOOTEND</p>";
+
+/* Generate HTML */
+function getStarted() {
+    document.write("<h1>Exciting javascript templating system</h1>");
+    for ( var i=0; i<replacements.length; i++ ) {
+        document.write("<p>");
+        document.write(replacements[i].niceName);
+        document.write(': ');
+        document.write("<br><input type='text' size='50' ");
+        document.write(" id='");
+        document.write(replacements[i].shortName);
+        document.write("' name='");
+        document.write(replacements[i].shortName);
+        document.write("'>");
+        document.write("</p>");
+    }
+}
+getStarted();
+
+/* Takes template, removes the section from startString to endString
+inclusive, replaces this with insertText, and returns the result */
+function replaceFoo(template, startString, endString, insertText) {
+    var stringArray = template.split(startString);
+    if( stringArray.length != 2 ) { alert('DEBUG 1'); } // DEBUG 1
+    var outputString = stringArray[0];
+    outputString += startString;
+    outputString += insertText;
+    outputString += endString;
+    var stringArray2 = stringArray[1].split(endString);
+    if( stringArray2.length != 2 ) { alert('DEBUG 2'); } // DEBUG 2
+    outputString += stringArray2[1];
+    return outputString;
+}
+
+function templateToHTML(template, tReps) {
+    for ( var i=0; i<tReps.length; i++ ) {
+        template = replaceFoo(template, tReps[i].startString, tReps[i].endString, document.getElementById(tReps[i].shortName).value);
+    }
+    return template;
+}
+/*
+function HTMLToTemplate(HTML, templateReplacements) {
+}*/
+
+
+
+function foo() {
+    var output = "";
+    for ( var i=0; i<replacements.length; i++ ) {
+        output += replacements[i].niceName;
+        output += ": ";
+        output += document.getElementById(replacements[i].shortName).value;
+        output += "\n";
+    }
+    var foobar = templateToHTML(basicTemplate, replacements);
+    alert(foobar);
+
+}
+</script>
+</head>
+
+<body>
+<p><input type='submit' value='Go!' onclick="foo()"></p>
+</body>
+
+</html>
