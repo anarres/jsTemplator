@@ -19,26 +19,25 @@ p {
 <script>
 /* This is the javascript way of defining a class 
 http://www.w3schools.com/js/js_objects.asp */
-function replacement(niceName, shortName, startString, endString, replacementValue) {
-    this.niceName=niceName;
-    this.shortName=shortName;
-    this.startString=startString;
-    this.endString=endString;
-    this.replacementValue="Replacement value not yet defined.";
+function replacement(niceName, shortName) {
+    this.niceName = niceName;
+    this.shortName = shortName;
+    this.startString = "<!--" + shortName + "START-->";
+    this.endString= "<!--" + shortName + "END-->";
 }
 
 /* This will go in a separate file so it can basically act like a config file */
 var replacements = new Array(
-    new replacement('Page title', 'pageTitle', '<!--TITLESTART-->','<!--TITLEEND-->'),
-    new replacement('Page content', 'pageContent', 'PAGESTART','PAGEEND'),
-    new replacement('Footer', 'footer','FOOTSTART','FOOTEND')
+    new replacement('Page title', 'pageTitle'),
+    new replacement('Page content', 'pageContent'),
+    new replacement('Footer', 'footer')
 );
 
-/* This will also be a separate file */
+/* This will also be a separate file FIXME */
 var basicTemplate = " \
-<html><h1><!--TITLESTART--><!--TITLEEND--></h1> \
-PAGESTART PAGEEND \
-<p>FOOTSTART FOOTEND</p>";
+<html><h1><!--pageTitleSTART--><!--pageTitleEND--></h1> \
+<!--pageContentSTART--> <!--pageContentEND--> \
+<p><!--footerSTART--> <!--footerEND--></p>";
 
 /* Generate HTML */
 function getStarted() {
@@ -62,7 +61,7 @@ getStarted();
 inclusive, replaces this with insertText, and returns the result */
 function replaceFoo(template, startString, endString, insertText) {
     var stringArray = template.split(startString);
-    if( stringArray.length != 2 ) { alert('DEBUG 1'); } // DEBUG 1
+    if( stringArray.length != 2 ) { alert('DEBUG 1: ' + stringArray); } // DEBUG 1
     var outputString = stringArray[0];
     outputString += startString;
     outputString += insertText;
@@ -82,8 +81,6 @@ function templateToHTML(template, tReps) {
 /*
 function HTMLToTemplate(HTML, templateReplacements) {
 }*/
-
-
 
 function foo() {
     var output = "";
