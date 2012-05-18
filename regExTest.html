@@ -1,0 +1,46 @@
+<html>
+<script>
+
+var patt = /<!--[\s\S]*?-->/gm;
+var myText = "<html><h1>Welcome to my website</h1><!-- This is a comment -->";
+//alert(myText.match(patt));
+
+var patt2 = /<!--START[\s\S]*?END-->/gm;
+var myText2 = "<html><h1>Welcome to my website</h1><!--STARTsomeName-->Here is some stuff<!--someNameEND-->";
+//alert(myText2.match(patt2));
+
+
+var patt6 = new RegExp("FOO(?=END)");
+var str6 = "FOOFOOEND";
+//alert(str6.match(patt6)); 
+
+
+
+var patt7 = /<!--START[\s\S]*?END-->/gm;
+var myText7 = "<html><h1>Welcome to my website</h1><!--STARTsomeName-->Here is some stuff<!--someNameEND-->";
+alert(myText7.match(patt7));
+
+
+
+
+
+
+/*
+var patt3 = /^web/g;
+var myText3 = "<html><h1>Welcome to my website</h1><!--STARTsomeName-->Here is some stuff<!--someNameEND-->";
+alert(myText3.match(patt3));
+*/
+
+
+
+
+/*
+var pattFoo =  /<!--START[\s\S]*?END-->/g;
+var myTextFoo = "<html><h1>Welcome to my website</h1><!-- This is a comment!!> </ --><!--STARTsomeName-->Put some stuff here and then... <!--someNameEnd-->";
+var niceText = "<!--STARTsomeName-->Put some stuff here and then... <!--someNameEnd-->";
+alert(niceText.match(pattFoo));
+*/
+
+
+</script>
+</html>

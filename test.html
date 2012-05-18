@@ -3,7 +3,7 @@
 <style>
 body {
     padding: 20px 100px;
-    font-family: Helvetica;
+    font-family: Verdana, Geneva, sans-serif;
     color: #505050;
 
 }
@@ -19,6 +19,7 @@ textarea {
     clear: both;
 }
 </style>
+<script type="text/javascript" src="betterSplit.js"></script>
 
 <script>
 /* This is the javascript way of defining a class 
@@ -26,9 +27,11 @@ http://www.w3schools.com/js/js_objects.asp */
 function replacement(niceName, shortName) {
     this.niceName = niceName;
     this.shortName = shortName;
-    this.startString = "<!--" + shortName + "START-->";
+    this.startString = "<!--START" + shortName + "-->";
     this.endString= "<!--" + shortName + "END-->";
 }
+
+var fooRegEx = /<!--START[\s\S]*?END-->/gm;
 
 /* This will go in a separate file so it can basically act like a config file */
 var replacements = new Array(
@@ -39,9 +42,9 @@ var replacements = new Array(
 
 /* This will also be a separate file FIXME */
 var basicTemplate = " \
-<html><h1><!--pageTitleSTART--><!--pageTitleEND--></h1> \
-<!--pageContentSTART--> <!--pageContentEND--> \
-<p><!--footerSTART--> <!--footerEND--></p></html>";
+<html><h1><!--STARTpageTitle--><!--pageTitleEND--></h1> \
+<!--STARTpageContent--> <!--pageContentEND--> \
+<p><!--STARTfooter--> <!--footerEND--></p></html>";
 
 /* Generate HTML */
 function getStarted() {
@@ -75,7 +78,6 @@ function replaceFoo(template, startString, endString, insertText) {
     outputString += stringArray2[1];
     return outputString;
 }
-////////////////////////
 function templateToHTML(template, tReps) {
     for ( var i=0; i<tReps.length; i++ ) {
         template = replaceFoo(template, tReps[i].startString, tReps[i].endString, document.getElementById(tReps[i].shortName).value);
@@ -83,13 +85,18 @@ function templateToHTML(template, tReps) {
     return template;
 }
 
-function HTMLToTemplate() {
-    var html = "<html><h1><!--pageTitleSTART-->qwer<!--pageTitleEND--></h1> <!--pageContentSTART-->asdf<!--pageContentEND--> <p><!--footerSTART-->zxcv<!--footerEND--></p></html>";
+function htmltotemplate(html) {
+    //alert('input html: ' + html);
 
+    // Split it up
+    var myArray = splitStringKeepDelimiters(html, fooRegEx)
+    alert(myArray);
+
+/*
     // Split by HTML comments
     var myArray = html.split(/<!--[\s\S]*?-->/g); 
     alert(myArray);
-/*
+
     var stringArray = html.split("END-->"); // Each element has a replacement except the last
     var template = "";
     var repShortNames = new Array();
@@ -101,7 +108,10 @@ function HTMLToTemplate() {
     template += stringArray[stringArray.length-1];
 */
 }
-function foo() {
+
+
+
+function getuserdata() {
     var output = "";
     for ( var i=0; i<replacements.length; i++ ) {
         output += replacements[i].niceName;
@@ -109,41 +119,27 @@ function foo() {
         output += document.getElementById(replacements[i].shortName).value;
         output += "\n";
     }
-    var foobar = templateToHTML(basicTemplate, replacements);
-    alert(foobar);
-}
-function bar() {
-    alert('hi');
+    var html = templateToHTML(basicTemplate, replacements);
+    alert(html);
 }
 
-function splitStringKeepDelimiters(myString, delimiter) {
-    var template = "";
-    var repNames = new Array();
+var sillyString = "FOOSilly FOO rabbit FOO Trix FOO are forFOO  kids!";
+var foo = splitStringKeepDelimiters(sillyString, "FOO");
+//alert('foo: ' + foo);
 
-    while (1==1) {
-
-        // Split just once
-        var word1 = myString.split(delimiter,1);
-        alert(word1[0].length);
-        var words2 = myString.split(delimiter,2);
-        alert(words2);
-        break;
-    }
-}
-var sillyString = "Silly rabbit Trix are for kids!";
-splitStringKeepDelimiters(sillyString, " ");
 
 
 </script>
 </head>
 
 <body>
-<input type='submit' value='Go!' onclick="foo()">
+<input type='submit' value='Get HTML' onclick="getuserdata()">
 <br>
 <p>Paste HTML code here to get back template and replacements:
-<textarea rows="10" cols="100"></textarea></p>
-<input type='submit' value='Go back!' onclick="bar()">
+<textarea rows="10" cols="100" id="foo1"></textarea></p>
+<input type='submit' value='Convert HTML back to template plus replacements'
+    onclick="htmltotemplate(document.getElementById('foo1').value)">
 <br><br>
-<input type="submit" value="click to test stuff!" onclick="HTMLToTemplate()">
+<input type="submit" value="click to test stuff!" onclick="htmltotemplate()">
 </body>
 </html>

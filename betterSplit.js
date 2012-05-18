@@ -1,4 +1,3 @@
-<script>
 function splitStringKeepDelimiters(myString, delimiter) {
     var output = new Array();
 
@@ -6,17 +5,17 @@ function splitStringKeepDelimiters(myString, delimiter) {
     if( myString.search(delimiter) == 0 ) {
         var dArray = myString.match(delimiter);
         var delimiter1 = dArray[0];
-        output += delimiter1;
+        output.push(delimiter1);
         if (myString.length > delimiter1.length) {
             myString = myString.slice(delimiter1.length);
         }
         else { alert('um, something went wrong'); }
     }
 
+    // Chew away at the string till it's gone
     while (1==1) {
-
         var word1 = myString.split(delimiter,1)[0];
-        output += word1;
+        output.push(word1);
         if (myString.length > word1.length) {
             myString = myString.slice(word1.length);
         }
@@ -24,7 +23,7 @@ function splitStringKeepDelimiters(myString, delimiter) {
 
         var dArray = myString.match(delimiter);
         var delimiter1 = dArray[0];
-        output += delimiter1;
+        output.push(delimiter1);
         if (myString.length > delimiter1.length) {
             myString = myString.slice(delimiter1.length);
         }
