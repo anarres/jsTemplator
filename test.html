@@ -85,28 +85,50 @@ function templateToHTML(template, tReps) {
     return template;
 }
 
+
+var fooRegEx = /<!--START[\s\S]*?END-->/gm;
+var fooRegEx2 = /<!--START[\s\S]*?-->/gm;
+
 function htmltotemplate(html) {
-    //alert('input html: ' + html);
 
-    // Split it up
-    var myArray = splitStringKeepDelimiters(html, fooRegEx)
-    alert(myArray);
+    var foo = "<!--A  bear shits in the woods she is ferocious.";
+    //alert(foo.slice(0,9));
 
-/*
-    // Split by HTML comments
-    var myArray = html.split(/<!--[\s\S]*?-->/g); 
-    alert(myArray);
-
-    var stringArray = html.split("END-->"); // Each element has a replacement except the last
     var template = "";
-    var repShortNames = new Array();
-    for( var i=0; i<(stringArray.length-1); i++ ) {
-        var subStringArray = stringArray[i].split("START-->");
-        var justHTML = subStringArray[1];
-        alert('justHTML: ' + justHTML);
+
+    // Split html into an array of substrings
+    var myArray = splitStringKeepDelimiters(html, fooRegEx);
+
+    // For each substring in the array
+    for(var i=0; i<myArray.length; i++) {
+
+        // Check it it's a templatey bit
+        if( myArray[i].slice(0,9) == "<!--START" ) {
+
+            // If yes, get the name-thing
+            var myMatchArray = myArray[i].match(fooRegEx2);
+            var myMatch = myMatchArray[0];
+            var myName = myMatch.slice(9,-3);
+
+            // Add the reconstructed string:
+            template += "<!--START";
+            template += myName;
+            template += "--><!--";
+            template += myName;
+            template += "END-->";
+
+        }
+        // It's not a templatey bit - just add it straight in
+        else {
+            template += myArray[i];
+        }
     }
-    template += stringArray[stringArray.length-1];
-*/
+    alert('template: ' + template);
+    return template;
+}
+
+function htmlToReps(html) {
+
 }
 
 
