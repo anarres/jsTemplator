@@ -1,0 +1,31 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+body {
+    padding: 10px 50px;
+    font-family: Verdana, Geneva, sans-serif;
+}
+h1 {
+    font-size: 2em;
+    font-weight: normal;
+    padding: 10px 0px;
+}
+h2, h3 {
+    font-size: 1.5em;
+    font-weight: normal;
+    padding: 10px 0px;
+}
+p {
+    padding: 7px 0px;
+}
+textarea {
+    display: block;
+    clear: both;
+}
+input, select {
+    display: block;
+    clear: both;
+    margin: 5px 0px;
+    padding: 5px 10px;
+}
