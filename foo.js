@@ -3,13 +3,22 @@ var fooRegEx2 = /<!--START[\s\S]*?-->/gm;
 
 /* This is the javascript way of defining a class 
 http://www.w3schools.com/js/js_objects.asp */
-function replacement(niceName, shortName) {
-    this.niceName = niceName;
+
+function replacement(shortName, niceName) {
     this.shortName = shortName;
+    this.niceName = niceName;
     this.startString = "<!--START" + shortName + "-->";
     this.endString= "<!--" + shortName + "END-->";
-    this.templateName="Not yet specified";
 }
+function template(templateName, html, replacements) {
+    this.templateName = templateName;
+    this.html = html;
+    this.replacements = replacements;   // Array of replacement objects
+
+
+
+
+
 
 /* Takes template, removes the section from startString to endString
 inclusive, replaces this with insertText, and returns the result */

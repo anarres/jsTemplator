@@ -28,6 +28,7 @@ input, select {
     clear: both;
     margin: 2px 0px;
     padding: 5px 10px;
+    font-size: 1em;
 }
 span.delete {
     font-size: 0.8em;
