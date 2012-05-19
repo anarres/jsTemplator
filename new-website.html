@@ -7,35 +7,21 @@
 <script>
 
 function preview() {
-
     var template = basicTemplate.html;
     var tReps = basicTemplate.replacements;
-
-    //alert(template + "ssssssssssssssssssss" + tReps);
-
     var html = templateToHTML(template, tReps);
-
-    alert('generated html: ' + html);
-
-    //var html = "<h1>FOO!</h1>";
     var foohtml = 'data:text/html;charset=utf-8,' + html;
-
     window.open(foohtml,'_blank','height=300,width=400');
-
 }
 
 function templateChosen() {
-
     var html = "";   
 
     // Insert some sort of logic to determine which template was chosen
-    var template = basicTemplate.html;
+    var template = basicTemplate;
 
-    // Go through the template and provide an input box for every one wanted
-    var inputNames = htmlToReps(template);
-
-    for( var i=0; i<inputNames.length; i++ ) {  
-        html += "<p>" + inputNames[i] + ":<input type='text' id='" + inputNames[i] + "' name='" + inputNames[i] + "'></p>"; 
+    for( var i=0; i<template.replacements.length; i++ ) {  
+        html += template.replacements[i].userInputHTML(); 
     }
     html += "<p><input type='submit' value='Preview website' onclick='preview()'></p>";
     document.getElementById('dynamic').innerHTML += html;
@@ -60,30 +46,6 @@ function templateChosen() {
 <div id="dynamic">
 
 </div><!--#dynamic-->
-
-<!--
-
-<h2>Edit website</h2>
-
-<h2>Menus and pages</h2>
-
-<p>This website currently has 1 menu(s) and 1 page(s).</p>
-
-<h3>Main menu</h3>
-
-(list of pages)
-
-<input type="submit" value="Add another page to menu 1" class="submit1"></input>
-
-<h3>Menu 2</h3>
-
-(Title and list of pages)
-
-<input type="submit" value="Add another page to menu 2" class="submit1"></input>
-
-<input type="submit" value="Add another menu" class="submit1"></input>
-
--->
 
 </body>
 </html>

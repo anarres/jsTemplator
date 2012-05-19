@@ -6,30 +6,36 @@ function replacement(shortName, niceName) {
     this.niceName = niceName;
     this.startString = "<!--START" + shortName + "-->";
     this.endString = "<!--" + shortName + "END-->";
+
     this.toString = function () {
       return 'replacement object: ' + this.niceName;
     };
+    this.userInputHTML = function () {
+        var html = "<p>" + this.niceName + ":<input type='text' id='" + this.shortName + "' name='" + this.shortName + "'></p>";
+        return html;
+    };
 }
 
-function template(templateName, html, replacementsArray) {
+function template(templateName, html, replacementsArray, maxMenus) {
     this.templateName = templateName;
     this.html = html;
     this.replacements = [];   // Array of replacement objects
     this.replacements = replacementsArray;
+    this.maxMenus = maxMenus;
+    this.numMenus = 1;
 
     this.toString = function () {
       return 'template object: ' + this.templateName;
     };
 }
 
-var rArray2 = new Array(
-    new replacement('websiteTitle', 'Website title'),
-    new replacement('pageContent', 'Page content'),
-    new replacement('footer', 'Footer')
-);
 var basicTemplate = new template('basicTemplate',
     "<html><h1><!--STARTwebsiteTitle--><!--websiteTitleEND--></h1><!--STARTpageContent--> <!--pageContentEND--><p><!--STARTfooter--> <!--footerEND--></p></html>",
-    rArray2
+    new Array(
+        new replacement('websiteTitle', 'Website title'),
+        new replacement('pageContent', 'Page content'),
+        new replacement('footer', 'Footer')
+    )
 );
 
 /* Takes template, removes the section from startString to endString
