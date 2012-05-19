@@ -43,7 +43,6 @@ function page(menu, menuRank) {
         html += "<input type='submit' value='Create another page'
         return html;
     };
-
 }
 
 // Class 'template' definition

@@ -30,8 +30,6 @@ function replacement(shortName, niceName) {
     };
 }
 
-
-
 // Class 'page' definition - both arguments are integers
 function page(menu, menuRank) {
     this.menu = menu;
@@ -67,6 +65,8 @@ function template(templateName, html, replacementsArray, pagesArray, maxMenus) {
     this.html = html;
     this.replacements = [];   // Array of replacement objects
     this.replacements = replacementsArray;
+    this.pages = [];   // Array of replacement objects
+    this.pages = pagesArray;
     this.maxMenus = maxMenus;   // Number of menus: 1,2,3...
 
     this.toString = function () {
@@ -88,47 +88,21 @@ var basicTemplate = new template('basicTemplate',
 );
 
 
-/*
-
-// An instance of class 'template'
-var basicTemplate = new template('basicTemplate',
-    "<html><h1><!--STARTwebsiteTitle--><!--websiteTitleEND--></h1><!--STARTpageContent--> <!--pageContentEND--><p><!--STARTfooter--> <!--footerEND--></p></html>",
-    new Array(
-        new replacement('websiteTitle', 'Website title'),
-        new replacement('footer', 'Footer')
-    ),
-    new Array(
-        new page(0,0)
-    ),
-    1
-);
-*/
-alert(basicTemplate);
-
-
-/*
 function templateChosen() {
 
+    var templateObj = basicTemplate;
+
     var html = "";
-
-
-}*/
-/*
-    // Insert some sort of logic to determine which template was chosen
-   // var template = basicTemplate;
-
-
-
-    alert('hi');
-    for( var i=0; i<template.replacements.length; i++ ) {  
-        html += template.replacements[i].userInputHTML(); 
+    for( var i=0;i<templateObj.replacements.length; i++ ) {
+        html += templateObj.replacements[i].userInputHTML();
     }
+    for( var i=0;i<templateObj.pages.length; i++ ) {
+        html += templateObj.pages[i].userInputHTML();
+    }
+    document.getElementById('dynamic').innerHTML = html;
 
-    // Add some pages logic!!
+}
 
-    html += "<p><input type='submit' value='Preview website' onclick='preview()'></p>";
-    document.getElementById('dynamic').innerHTML += html;
-}*/
 
 </script>
 </head>
