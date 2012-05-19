@@ -8,8 +8,8 @@ function replacement(niceName, shortName) {
     this.shortName = shortName;
     this.startString = "<!--START" + shortName + "-->";
     this.endString= "<!--" + shortName + "END-->";
+    this.templateName="Not yet specified";
 }
-
 
 /* Takes template, removes the section from startString to endString
 inclusive, replaces this with insertText, and returns the result */
@@ -55,7 +55,6 @@ function htmltotemplate(html) {
             template += "--><!--";
             template += myName;
             template += "END-->";
-
         }
         // It's not a templatey bit - just add it straight in
         else {
@@ -67,7 +66,21 @@ function htmltotemplate(html) {
 }
 
 function htmlToReps(html) {
+    var output = new Array();
 
+    // Get array of things like this: <!--STARTsomeName-->Some other stuff<!--someNameEND-->
+    var myArray = splitStringKeepDelimiters(html, fooRegEx, "delimitersOnly");
+
+    // For each item in the array
+    for(var i=0; i<myArray.length; i++) {
+
+        // Extract someName
+        var myMatchArray = myArray[i].match(fooRegEx2);
+        var myMatch = myMatchArray[0];
+        var someName = myMatch.slice(9,-3);
+        output.push(someName);
+    }
+    return output;
 }
 
 function getuserdata() {

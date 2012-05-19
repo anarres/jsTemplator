@@ -1,6 +1,8 @@
 <html>
 <head>
 <LINK href="style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="betterSplit.js"></script>
+<script type="text/javascript" src="foo.js"></script>
 
 <script>
 
@@ -9,12 +11,21 @@ var basicTemplate = " \
 <!--STARTpageContent--> <!--pageContentEND--> \
 <p><!--STARTfooter--> <!--footerEND--></p></html>";
 
+
 function templateChosen() {
 
+    var html = "";   
+
     // Insert some sort of logic to determine which template was chosen
+    var template = basicTemplate;
 
-    // Go through the template and provide an input box for every one wanted.
+    // Go through the template and provide an input box for every one wanted
+    var inputNames = htmlToReps(template);
 
+    for( var i=0; i<inputNames.length; i++ ) {  
+        html += "<p>" + inputNames[i] + ":<input type='text' name='" + inputNames[i] + "'></p>";
+    }
+    document.getElementById('dynamic').innerHTML += html;
 }
 
 </script>
@@ -25,12 +36,19 @@ function templateChosen() {
 
 <h2>Website design template</h2>
 
-<select onblur="alert('hi')">
-  <option>Basic Template</option>
-  <option>Basic Template</option>
-  <option>Basic Template</option>
-  <option>You can choose any template you like as long as it's the Basic Template</option>
+<select>
+  <option selected="selected"> --- Choose a design template --- </option>
+  <option onclick="templateChosen()">Basic Template</option>
+  <option onclick="templateChosen()">Basic Template</option>
+  <option onclick="templateChosen()">Basic Template</option>
+  <option onclick="templateChosen()">You can choose any template you like as long as it's the Basic Template</option>
 </select>
+
+<div id="dynamic">
+
+</div><!--#dynamic-->
+
+<!--
 
 <h2>Edit website</h2>
 
@@ -51,6 +69,8 @@ function templateChosen() {
 <input type="submit" value="Add another page to menu 2" class="submit1"></input>
 
 <input type="submit" value="Add another menu" class="submit1"></input>
+
+-->
 
 </body>
 </html>
