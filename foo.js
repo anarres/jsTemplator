@@ -1,6 +1,7 @@
 var fooRegEx = /<!--START[\s\S]*?END-->/gm;
 var fooRegEx2 = /<!--START[\s\S]*?-->/gm;
 
+// Class 'replacement' definition
 function replacement(shortName, niceName) {
     this.shortName = shortName;
     this.niceName = niceName;
@@ -16,19 +17,40 @@ function replacement(shortName, niceName) {
     };
 }
 
+// Class 'page' definition - both arguments are integers
+function page(menu, menuRank) {
+    this.menu = menu;
+    this.menuRank = menuRank;
+
+    // Page title
+    var pageTitleShortName = "page" + menu + "_" + menuRank;
+    var pageTitleNiceName = "page " + menuRank + " of menu " + menu;
+    this.pageTitle = new replacement(pageTitleShortName, pageTitleNiceName);
+
+    // Page content
+    var pageContentShortName = "page" + menu + "_" + menuRank;
+    var pageContentNiceName = "page " + menuRank + " of menu " + menu + " content";
+    this.pageContent = new replacement(pageContentShortName, pageContentNiceName);
+
+    this.toString = function () {
+      return 'page object: ' + this.pageTitle.niceName;
+    };
+}
+
+// Class 'template' definition
 function template(templateName, html, replacementsArray, maxMenus) {
     this.templateName = templateName;
     this.html = html;
     this.replacements = [];   // Array of replacement objects
     this.replacements = replacementsArray;
-    this.maxMenus = maxMenus;
-    this.numMenus = 1;
+    this.maxMenus = maxMenus;   // Number of menus: 1,2,3...
 
     this.toString = function () {
       return 'template object: ' + this.templateName;
     };
 }
 
+// An instance of class 'template'
 var basicTemplate = new template('basicTemplate',
     "<html><h1><!--STARTwebsiteTitle--><!--websiteTitleEND--></h1><!--STARTpageContent--> <!--pageContentEND--><p><!--STARTfooter--> <!--footerEND--></p></html>",
     new Array(
@@ -52,6 +74,7 @@ function replaceFoo(template, startString, endString, insertText) {
     outputString += stringArray2[1];
     return outputString;
 }
+
 function templateToHTML(template, tReps) {
     for ( var i=0; i<tReps.length; i++ ) {
         template = replaceFoo(template, tReps[i].startString, tReps[i].endString, document.getElementById(tReps[i].shortName).value);
@@ -88,7 +111,6 @@ function htmltotemplate(html) {
             template += myArray[i];
         }
     }
-    alert('template: ' + template);
     return template;
 }
 
@@ -108,16 +130,4 @@ function htmlToReps(html) {
         output.push(someName);
     }
     return output;
-}
-
-function getuserdata() {
-    var output = "";
-    for ( var i=0; i<replacements.length; i++ ) {
-        output += replacements[i].niceName;
-        output += ": ";
-        output += document.getElementById(replacements[i].shortName).value;
-        output += "\n";
-    }
-    var html = templateToHTML(basicTemplate, replacements);
-    alert(html);
 }
