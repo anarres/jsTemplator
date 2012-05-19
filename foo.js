@@ -1,24 +1,34 @@
 var fooRegEx = /<!--START[\s\S]*?END-->/gm;
 var fooRegEx2 = /<!--START[\s\S]*?-->/gm;
 
-/* This is the javascript way of defining a class 
-http://www.w3schools.com/js/js_objects.asp */
-
 function replacement(shortName, niceName) {
     this.shortName = shortName;
     this.niceName = niceName;
-    this.startString = "<!--START" + shortName + "-->";
-    this.endString= "<!--" + shortName + "END-->";
+    this.toString = function () {
+      return 'replacement object: ' + this.niceName;
+    };
 }
-function template(templateName, html, replacements) {
+
+function template(templateName, html, replacementsArray) {
     this.templateName = templateName;
     this.html = html;
-    this.replacements = replacements;   // Array of replacement objects
+    this.replacements = [];   // Array of replacement objects
+    this.replacements = replacementsArray;
 
+    this.toString = function () {
+      return 'template object: ' + this.templateName;
+    };
+}
 
-
-
-
+var rArray2 = new Array(
+    new replacement('websiteTitle', 'Website title'),
+    new replacement('pageContent', 'Page content'),
+    new replacement('footer', 'Footer')
+);
+var basicTemplate = new template('basicTemplate',
+    "<html><h1><!--STARTwebsiteTitle--><!--websiteTitleEND--></h1><!--STARTpageContent--> <!--pageContentEND--><p><!--STARTfooter--> <!--footerEND--></p></html>",
+    rArray2
+);
 
 /* Takes template, removes the section from startString to endString
 inclusive, replaces this with insertText, and returns the result */

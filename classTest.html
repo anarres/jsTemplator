@@ -1,0 +1,38 @@
+<html>
+<script>
+
+function replacement(shortName, niceName) {
+    this.shortName = shortName;
+    this.niceName = niceName;
+    this.startString = "<!--START" + shortName + "-->";
+    this.endString= "<!--" + shortName + "END-->";
+
+    this.toString = function () {
+      return 'replacement object: ' + this.niceName;
+    };
+}
+
+var rArray2 = new Array(
+    new replacement('websiteTitle', 'Website title'),
+    new replacement('pageContent', 'Page content'),
+    new replacement('footer', 'Footer')
+);
+
+function template(templateName, html, replacementsArray) {
+    this.templateName = templateName;
+    this.html = html;
+    this.replacements = [];   // Array of replacement objects
+    this.replacements = replacementsArray;
+
+    this.toString = function () {
+      return 'template object: ' + this.templateName;
+    };
+}
+
+var basicTemplate = new template('basicTemplate',
+    "<html><h1><!--STARTwebsiteTitle--><!--websiteTitleEND--></h1><!--STARTpageContent--> <!--pageContentEND--><p><!--STARTfooter--> <!--footerEND--></p></html>",
+    rArray2
+);
+
+</script>
+</html>

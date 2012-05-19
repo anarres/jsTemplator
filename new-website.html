@@ -6,33 +6,25 @@
 
 <script>
 
-var basicTemplate = " \
-<html><h1><!--STARTwebsiteTitle--><!--websiteTitleEND--></h1> \
-<!--STARTpageContent--> <!--pageContentEND--> \
-<p><!--STARTfooter--> <!--footerEND--></p></html>";
-
-
-
 function preview() {
 
     var template = basicTemplate;
 
-    var html = templateToHTML(template, tReps)
+    //var html = templateToHTML(template, tReps);
 
-    //var html = "<h1>FOO!</h1>";
+    var html = "<h1>FOO!</h1>";
     var foohtml = 'data:text/html;charset=utf-8,' + html;
 
     window.open(foohtml,'_blank','height=300,width=400');
 
 }
 
-
 function templateChosen() {
 
     var html = "";   
 
     // Insert some sort of logic to determine which template was chosen
-    var template = basicTemplate;
+    var template = basicTemplate.html;
 
     // Go through the template and provide an input box for every one wanted
     var inputNames = htmlToReps(template);
