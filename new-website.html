@@ -8,11 +8,16 @@
 
 function preview() {
 
-    var template = basicTemplate;
+    var template = basicTemplate.html;
+    var tReps = basicTemplate.replacements;
 
-    //var html = templateToHTML(template, tReps);
+    //alert(template + "ssssssssssssssssssss" + tReps);
 
-    var html = "<h1>FOO!</h1>";
+    var html = templateToHTML(template, tReps);
+
+    alert('generated html: ' + html);
+
+    //var html = "<h1>FOO!</h1>";
     var foohtml = 'data:text/html;charset=utf-8,' + html;
 
     window.open(foohtml,'_blank','height=300,width=400');
@@ -30,7 +35,7 @@ function templateChosen() {
     var inputNames = htmlToReps(template);
 
     for( var i=0; i<inputNames.length; i++ ) {  
-        html += "<p>" + inputNames[i] + ":<input type='text' name='" + inputNames[i] + "'></p>";    //<span class='delete'>delete this</span>
+        html += "<p>" + inputNames[i] + ":<input type='text' id='" + inputNames[i] + "' name='" + inputNames[i] + "'></p>"; 
     }
     html += "<p><input type='submit' value='Preview website' onclick='preview()'></p>";
     document.getElementById('dynamic').innerHTML += html;

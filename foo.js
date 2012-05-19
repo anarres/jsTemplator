@@ -4,6 +4,8 @@ var fooRegEx2 = /<!--START[\s\S]*?-->/gm;
 function replacement(shortName, niceName) {
     this.shortName = shortName;
     this.niceName = niceName;
+    this.startString = "<!--START" + shortName + "-->";
+    this.endString = "<!--" + shortName + "END-->";
     this.toString = function () {
       return 'replacement object: ' + this.niceName;
     };
