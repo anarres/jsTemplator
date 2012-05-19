@@ -17,7 +17,7 @@ h2, h3 {
     padding: 10px 0px;
 }
 p {
-    padding: 7px 0px;
+    padding: 10px 0px;
 }
 textarea {
     display: block;
@@ -26,6 +26,9 @@ textarea {
 input, select {
     display: block;
     clear: both;
-    margin: 5px 0px;
+    margin: 2px 0px;
     padding: 5px 10px;
+}
+span.delete {
+    font-size: 0.8em;
 }
