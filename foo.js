@@ -35,10 +35,19 @@ function page(menu, menuRank) {
     this.toString = function () {
       return 'page object: ' + this.pageTitle.niceName;
     };
+    this.userInputHTML = function () {
+        var html = "";
+        html += this.pageTitle.userInputHTML();
+        html += this.pageContent.userInputHTML();
+        html += "<p>This page belongs to menu: " + this.menu + " and has rank: " + this.menuRank + ".</p>
+        html += "<input type='submit' value='Create another page'
+        return html;
+    };
+
 }
 
 // Class 'template' definition
-function template(templateName, html, replacementsArray, maxMenus) {
+function template(templateName, html, replacementsArray, pagesArray, maxMenus) {
     this.templateName = templateName;
     this.html = html;
     this.replacements = [];   // Array of replacement objects
@@ -50,15 +59,7 @@ function template(templateName, html, replacementsArray, maxMenus) {
     };
 }
 
-// An instance of class 'template'
-var basicTemplate = new template('basicTemplate',
-    "<html><h1><!--STARTwebsiteTitle--><!--websiteTitleEND--></h1><!--STARTpageContent--> <!--pageContentEND--><p><!--STARTfooter--> <!--footerEND--></p></html>",
-    new Array(
-        new replacement('websiteTitle', 'Website title'),
-        new replacement('pageContent', 'Page content'),
-        new replacement('footer', 'Footer')
-    )
-);
+
 
 /* Takes template, removes the section from startString to endString
 inclusive, replaces this with insertText, and returns the result */
