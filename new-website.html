@@ -6,6 +6,15 @@
 
 <script>
 
+function removeItemFromArray(array, index) {
+    var maxfoo = array.length - 1;
+    for( var i=index; i<maxfoo; i++ ) {
+        array[i] = array[i+1];
+    }
+    array.pop();
+    return array;
+}
+
 function preview() {
     var template = basicTemplate.html;
     var tReps = basicTemplate.replacements;
@@ -53,10 +62,28 @@ function page(menu, menuRank) {
         var html = "<div class='pageInput'>";
         html += this.pageTitle.userInputHTML();
         html += this.pageContent.userInputHTML();
-        html += "<p>This page belongs to menu: " + this.menu + " and has rank: " + this.menuRank + ".</p></div>";
+        html += "<p>This page belongs to menu: " + 
+            this.menu + " and has rank: " + this.menuRank + 
+            ". <span class='delete' onclick='removePage(" + 
+            this.menu + ", " + this.menuRank + ")'>delete this page</span></p></div>";
         return html;
     };
 }
+
+
+function removePage(menu, menuRank) {
+    var pagesArray = new Array();
+    for( var i=0; i<templateObj.pages.length; i++ ) {
+        if ( !(templateObj.pages[i].menu == menu && templateObj.pages[i].menuRank == menuRank) ) {
+            pagesArray.push(templateObj.pages[i]);
+        }
+    }
+    templateObj.pages = pagesArray;
+    templateChosen();
+}
+
+
+
 
 // Class 'template' definition
 function template(templateName, html, replacementsArray, pagesArray, maxMenus) {
@@ -99,11 +126,15 @@ function templateChosen() {
     }
     document.getElementById('dynamic').innerHTML = html;
     document.getElementById('newPage').style.visibility = 'visible';
+    document.getElementById('newMenu').style.visibility = 'visible';
 }
 
 function createnewpage() {
     templateObj.pages.push( new page(0, templateObj.pages.length) );
     templateChosen();
+}
+function createnewmenu() {
+    alert('Sorry, this doesnt do anything yet.');
 }
 </script>
 </head>
@@ -126,10 +157,12 @@ function createnewpage() {
 </div><!--#dynamic-->
 
 <div id="newPage" style="visibility:hidden;">
-
     <p><input type='submit' value='Create another page' onclick='createnewpage()'></p>
-
 </div><!--#newPage-->
+
+<div id="newMenu" style="visibility:hidden;">
+    <p><input type='submit' value='Create another menu' onclick='createnewmenu()'></p>
+</div><!--#newMenu-->
 
 </body>
 </html>
