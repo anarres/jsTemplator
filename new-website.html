@@ -70,20 +70,24 @@ function page(menu, menuRank) {
     };
 }
 
-
 function removePage(menu, menuRank) {
     var pagesArray = new Array();
     for( var i=0; i<templateObj.pages.length; i++ ) {
+
+        // Leave out the page we're removing
         if ( !(templateObj.pages[i].menu == menu && templateObj.pages[i].menuRank == menuRank) ) {
+
+            // If a page is in the same menu and has a higher menuRank than the one
+            // that is removed, subtract 1 from its menuRank
+            if( templateObj.pages[i].menu == menu && templateObj.pages[i].menuRank > menuRank ) {
+                templateObj.pages[i].menuRank -= 1;
+            }
             pagesArray.push(templateObj.pages[i]);
         }
     }
     templateObj.pages = pagesArray;
     templateChosen();
 }
-
-
-
 
 // Class 'template' definition
 function template(templateName, html, replacementsArray, pagesArray, maxMenus) {
