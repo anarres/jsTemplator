@@ -59,7 +59,6 @@ function template(templateName, html, replacementsArray, pagesArray, maxMenus) {
 }
 
 
-
 /* Takes template, removes the section from startString to endString
 inclusive, replaces this with insertText, and returns the result */
 function replaceFoo(template, startString, endString, insertText) {

@@ -54,7 +54,6 @@ function page(menu, menuRank) {
         html += this.pageTitle.userInputHTML();
         html += this.pageContent.userInputHTML();
         html += "<p>This page belongs to menu: " + this.menu + " and has rank: " + this.menuRank + ".</p>";
-        html += "<input type='submit' value='Create another page'>";
         return html;
     };
 }
@@ -87,10 +86,10 @@ var basicTemplate = new template('basicTemplate',
     1
 );
 
+// GLOBAL VAR!!! (for now)
+var templateObj = basicTemplate;
 
 function templateChosen() {
-
-    var templateObj = basicTemplate;
 
     var html = "";
     for( var i=0;i<templateObj.replacements.length; i++ ) {
@@ -100,8 +99,19 @@ function templateChosen() {
         html += templateObj.pages[i].userInputHTML();
     }
     document.getElementById('dynamic').innerHTML = html;
-
+    document.getElementById('newPage').style.visibility = 'visible';
 }
+
+function createnewpage() {
+    var pageNum = templateObj.pages.length;
+
+    var newPage = new page(0, pageNum);
+    templateObj.pages.push( new page(0, pageNum) );
+    templateChosen();
+}
+
+
+
 
 
 </script>
@@ -123,6 +133,12 @@ function templateChosen() {
 <div id="dynamic">
 
 </div><!--#dynamic-->
+
+<div id="newPage" style="visibility:hidden;">
+
+    <p><input type='submit' value='Create another page' onclick='createnewpage()'></p>
+
+</div><!--#newPage-->
 
 </body>
 </html>
