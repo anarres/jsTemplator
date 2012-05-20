@@ -37,7 +37,7 @@ function page(menu, menuRank) {
 
     // Page title
     var pageTitleShortName = "page" + menu + "_" + menuRank;
-    var pageTitleNiceName = "page " + menuRank + " of menu " + menu;
+    var pageTitleNiceName = "page " + menuRank + " of menu " + menu + " title";
     this.pageTitle = new replacement(pageTitleShortName, pageTitleNiceName);
 
     // Page content
@@ -50,10 +50,10 @@ function page(menu, menuRank) {
     };
 
     this.userInputHTML = function () {
-        var html = "";
+        var html = "<div class='pageInput'>";
         html += this.pageTitle.userInputHTML();
         html += this.pageContent.userInputHTML();
-        html += "<p>This page belongs to menu: " + this.menu + " and has rank: " + this.menuRank + ".</p>";
+        html += "<p>This page belongs to menu: " + this.menu + " and has rank: " + this.menuRank + ".</p></div>";
         return html;
     };
 }
@@ -90,7 +90,6 @@ var basicTemplate = new template('basicTemplate',
 var templateObj = basicTemplate;
 
 function templateChosen() {
-
     var html = "";
     for( var i=0;i<templateObj.replacements.length; i++ ) {
         html += templateObj.replacements[i].userInputHTML();
@@ -103,17 +102,9 @@ function templateChosen() {
 }
 
 function createnewpage() {
-    var pageNum = templateObj.pages.length;
-
-    var newPage = new page(0, pageNum);
-    templateObj.pages.push( new page(0, pageNum) );
+    templateObj.pages.push( new page(0, templateObj.pages.length) );
     templateChosen();
 }
-
-
-
-
-
 </script>
 </head>
 

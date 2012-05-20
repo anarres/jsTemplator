@@ -17,7 +17,7 @@ h2, h3 {
     padding: 10px 0px;
 }
 p {
-    padding: 10px 0px;
+    padding: 7px 0px;
 }
 textarea {
     display: block;
@@ -32,4 +32,10 @@ input, select {
 }
 span.delete {
     font-size: 0.8em;
+}
+
+.pageInput {
+    padding: 5px;
+    margin: 10px 0px;
+    border: 1px solid grey;
 }
