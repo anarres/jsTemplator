@@ -34,6 +34,17 @@ function replacement(shortName, niceName) {
     };
 }
 
+function getStartString(myName) {    
+    return "<!--START" + myName + "-->";
+}
+function getEndString(myName) {
+    return "<!--" + myName + "END-->";
+}
+
+
+alert('hi');
+
+
 // Class 'page' definition - both arguments are integers
 function page(menu, menuRank) {
     this.menu = menu;
@@ -111,11 +122,15 @@ function template(templateName, html, replacementsArray, pagesArray, maxMenus) {
         }
         return output;
     };
+    //this.pageHTML = function ()
 }
+
+
+
 
 // An instance of class 'template'
 var basicTemplate = new template('basicTemplate',
-    "<html><h1><!--STARTwebsiteTitle--><!--websiteTitleEND--></h1><!--STARTpageContent--> <!--pageContentEND--><p><!--STARTfooter--> <!--footerEND--></p></html>",
+    "<html><h1><!--STARTwebsiteTitle--><!--websiteTitleEND--></h1><h2><!--STARTpageContent--> <!--pageContentEND--><p><!--STARTfooter--> <!--footerEND--></p></html>",
     new Array(
         new replacement('websiteTitle', 'Website title'),
         new replacement('footer', 'Footer')
@@ -129,7 +144,160 @@ var basicTemplate = new template('basicTemplate',
 // GLOBAL VAR!!! (for now)
 var templateObj = basicTemplate;
 
+function templateChosen() {
+    //var html
+    document.getElementById('newPage').style.visibility = "visible";
+    document.getElementById('newMenu').style.visibility = "visible";
+    document.getElementById('preview').style.visibility = "visible";
+}
 
+
+
+alert('hi');
+
+
+/* Takes template, removes the section from startString to endString' +  
+inclusive, replaces this with insertText, and returns the result */
+function replaceFoo(template, startString, endString, insertText) {
+    var stringArray = template.split(startString);
+    alert('template: ' + template + "....... starstring: " + startString);
+    if( stringArray.length == 2 ) { 
+        var outputString = stringArray[0];
+        outputString += startString;
+        outputString += insertText;
+        outputString += endString;
+        var stringArray2 = stringArray[1].split(endString);
+        if( stringArray2.length != 2 ) { alert('DEBUG 2'); } // DEBUG 2
+        outputString += stringArray2[1];
+        return outputString;
+    }
+    else {
+        return template;
+    }
+}
+
+
+
+alert('foo');
+
+/* Allows a 2D array to be treated like a Python dictionary 
+myArray looks like this: 
+[ ['species','cat'], ['name','Fluffy'], ['age','7 years'] ] */
+function giveNameGetValue(myArray, myName) {
+    for( var i=0; i<myArray.length; i++ ) {
+        if( myArray[i][0] == myName ) {
+            return myArray[i][1];
+        }
+    }
+    return false;
+}
+
+function getStartString(myName) {    
+    return "<!--START" + myName + "-->";
+}
+function getEndString(myName) {
+    return "<!--" + myName + "END-->";
+}
+
+////////////////////////////////////////
+function templateToHTML(template, repsArray) {
+    for ( var i=0; i<repsArray.length; i++ ) {
+        //alert( repsArray[i][1] );
+        template = replaceFoo(template, getStartString( repsArray[i][0] ), getEndString( repsArray[i][0] ), repsArray[i][1] );
+    }
+    return template;
+}
+
+function htmltotemplate(html) {
+    var template = "";
+
+    // Split html into an array of substrings
+    var myArray = splitStringKeepDelimiters(html, fooRegEx);
+
+    // For each substring in the array
+    for(var i=0; i<myArray.length; i++) {
+
+        // Check it it's a templatey bit
+        if( myArray[i].slice(0,9) == "<!--START" ) {
+
+            // If yes, get the name-thing
+            var myMatchArray = myArray[i].match(fooRegEx2);
+            var myMatch = myMatchArray[0];
+            var myName = myMatch.slice(9,-3);
+
+            // Add the reconstructed string:
+            template += "<!--START";
+            template += myName;
+            template += "--><!--";
+            template += myName;
+            template += "END-->";
+        }
+        // It's not a templatey bit - just add it straight in
+        else {
+            template += myArray[i];
+        }
+    }
+    return template;
+}
+
+function htmlToReps(html) {
+    var output = new Array();
+
+    // Get array of things like this: <!--STARTsomeName-->Some other stuff<!--someNameEND-->
+    var myArray = splitStringKeepDelimiters(html, fooRegEx, "delimitersOnly");
+
+    // For each item in the array
+    for(var i=0; i<myArray.length; i++) {
+
+        // Extract someName
+        var myMatchArray = myArray[i].match(fooRegEx2);
+        var myMatch = myMatchArray[0];
+        var someName = myMatch.slice(9,-3);
+        output.push(someName);
+    }
+    return output;
+}
+
+function getPageReplacements(menu, menuRank, replacements) {
+    var pageReplacements = new Array();
+    var myString = "" + menu + "_" + menuRank;
+    var pageX_XTitle = "page" + myString + "Title";
+    var pageX_XContent = "page" + myString + "Content";
+
+    for( var i=0; i<replacements.length; i++ ) {
+        if( replacements[i][0].slice(0,4) == "page" ) {
+            if( replacements[i][0] == pageX_XTitle ) {
+                pageReplacements.push( new Array("pageTitle", replacements[i][1]) );
+            }
+            else if( replacements[i][0] == pageX_XContent ) {
+                pageReplacements.push( new Array("pageContent", replacements[i][1]) );
+            }
+        }
+        else {
+            pageReplacements.push( replacements[i] );
+        }
+    }
+    return pageReplacements;
+}
+
+function getPage(templateHTML, menu, menuRank, replacements) {
+    var pageReps = getPageReplacements(menu, menuRank, replacements);
+    return templateToHTML(templateHTML, pageReps);
+}
+
+var myReplacements = new Array(
+    new Array('page0_0Title', "Home"),
+    new Array('page0_0Content', "<h2>This is my first header</h2><p>Lorem!</p>"),
+    new Array('page0_1Title', "About"),
+    new Array('page0_1Content', "<h2>About us</h2><p>Lorem! Lorem! Lorem!</p>"),
+    new Array('menu0', 'Main menu goes here'),
+    new Array('websiteTitle', 'My New Website'),
+    new Array('footer', 'Copyright March 12 2016 All rights reserved')
+);
+
+
+
+alert('Done! Here it is: ' + getPage(basicTemplate.html, 0, 0, myReplacements) );
 
 
 
