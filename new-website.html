@@ -6,6 +6,9 @@
 
 <script>
 
+var fooRegEx = /<!--START[\s\S]*?END-->/gm;
+var fooRegEx2 = /<!--START[\s\S]*?-->/gm;
+
 function removeItemFromArray(array, index) {
     var maxfoo = array.length - 1;
     for( var i=index; i<maxfoo; i++ ) {
@@ -13,14 +16,6 @@ function removeItemFromArray(array, index) {
     }
     array.pop();
     return array;
-}
-
-function preview() {
-    var template = basicTemplate.html;
-    var tReps = basicTemplate.replacements;
-    var html = templateToHTML(template, tReps);
-    var foohtml = 'data:text/html;charset=utf-8,' + html;
-    window.open(foohtml,'_blank','height=300,width=400');
 }
 
 // Class 'replacement' definition
@@ -34,7 +29,7 @@ function replacement(shortName, niceName) {
       return 'replacement object: ' + this.niceName;
     };
     this.userInputHTML = function () {
-        var html = "<p>" + this.niceName + ":<input type='text' id='" + this.shortName + "' name='" + this.shortName + "'></p>";
+        var html = "<p>" + this.niceName + ":<input type='text' class='userInput' id='" + this.shortName + "' name='" + this.shortName + "'></p>";
         return html;
     };
 }
@@ -89,6 +84,8 @@ function removePage(menu, menuRank) {
     templateChosen();
 }
 
+
+
 // Class 'template' definition
 function template(templateName, html, replacementsArray, pagesArray, maxMenus) {
     this.templateName = templateName;
@@ -101,6 +98,18 @@ function template(templateName, html, replacementsArray, pagesArray, maxMenus) {
 
     this.toString = function () {
       return 'template object: ' + this.templateName;
+    };
+
+    this.getReplacements = function () {
+        var output = new Array();
+        for( var i=0; i< this.replacements.length; i++ ) {
+            output.push( this.replacements[i] );
+        }
+        for( var j=0; j<this.pages.length; j++ ) {
+            output.push( this.pages[j].pageTitle );
+            output.push( this.pages[j].pageContent );
+        }
+        return output;
     };
 }
 
@@ -120,26 +129,11 @@ var basicTemplate = new template('basicTemplate',
 // GLOBAL VAR!!! (for now)
 var templateObj = basicTemplate;
 
-function templateChosen() {
-    var html = "";
-    for( var i=0;i<templateObj.replacements.length; i++ ) {
-        html += templateObj.replacements[i].userInputHTML();
-    }
-    for( var i=0;i<templateObj.pages.length; i++ ) {
-        html += templateObj.pages[i].userInputHTML();
-    }
-    document.getElementById('dynamic').innerHTML = html;
-    document.getElementById('newPage').style.visibility = 'visible';
-    document.getElementById('newMenu').style.visibility = 'visible';
-}
 
-function createnewpage() {
-    templateObj.pages.push( new page(0, templateObj.pages.length) );
-    templateChosen();
-}
-function createnewmenu() {
-    alert('Sorry, this doesnt do anything yet.');
-}
+
+
+
+
 </script>
 </head>
 
@@ -167,6 +161,10 @@ function createnewmenu() {
 <div id="newMenu" style="visibility:hidden;">
     <p><input type='submit' value='Create another menu' onclick='createnewmenu()'></p>
 </div><!--#newMenu-->
+
+<div id="preview" style="visibility:hidden;">
+    <p><input type='submit' value='Preview' onclick='preview()'></p>
+</div><!--#preview-->
 
 </body>
 </html>
