@@ -251,7 +251,9 @@ function htmlToReps(html) {
 function makeMenu(menuID, pageTitles) {
     var output = "<div id='" + menuID + "'>";
     for( var i=0; i<pageTitles.length; i++ ) {
-        output += "<li><a href=''>";
+        output += "<li><a href='";
+        output += slugify(pageTitles[i]) + ".html";
+        output += "'>";
         output += pageTitles[i];
         output += "</a></li>";
     }
@@ -300,7 +302,6 @@ function getPageReplacements(menu, menuRank, replacements) {
     return pageReplacements;
 }
 
-
 function getPage(templateHTML, menu, menuRank, replacements) {
     var pageReps = getPageReplacements(menu, menuRank, replacements);
     return templateToHTML(templateHTML, pageReps);
@@ -319,12 +320,12 @@ var myReplacements = new Array(
     new Array('footer', 'Copyright March 12 2016 All rights reserved')
 );
 
-function doStuff() {
+
+function doPreviewStuff() {
     var html = getPage(basicTemplate.html, 0, 0, myReplacements);
     html = "data:text/html;charset=utf-8," + html;
     window.open(html);
 }
-
 </script>
 </head>
 
@@ -342,7 +343,7 @@ function doStuff() {
 </p>
 
 
-<p><input type="submit" value="View page" onclick="doStuff()" ></input></p>
+<p><input type="submit" value="View page" onclick="doPreviewStuff()" ></input></p>
 
 
 
