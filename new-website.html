@@ -147,10 +147,18 @@ var basicTemplate = new template('basicTemplate',
 var templateObj = basicTemplate;
 
 function templateChosen() {
-    //var html
     document.getElementById('newPage').style.visibility = "visible";
     document.getElementById('newMenu').style.visibility = "visible";
-    document.getElementById('preview').style.visibility = "visible";
+    var reps = htmlToReps(basicTemplate.html);
+    var repObjs = new Array();
+    for( var i=0; i<reps.length; i++ ) {
+        repObjs.push( new replacement(reps[i], reps[i]) );
+    }
+    var myDiv = document.getElementById('dynamic');
+
+    for( var j=0; j<repObjs.length; j++ ) {
+        myDiv.innerHTML += repObjs[j].userInputHTML();
+    }
 }
 
 /* Takes template, removes the section from startString to endString' +  
@@ -320,7 +328,6 @@ var myReplacements = new Array(
     new Array('footer', 'Copyright March 12 2016 All rights reserved')
 );
 
-
 function doPreviewStuff() {
     var html = getPage(basicTemplate.html, 0, 0, myReplacements);
     html = "data:text/html;charset=utf-8," + html;
@@ -342,11 +349,7 @@ function doPreviewStuff() {
     </select>
 </p>
 
-
 <p><input type="submit" value="View page" onclick="doPreviewStuff()" ></input></p>
-
-
-
 
 <div id="dynamic">
 
@@ -359,10 +362,6 @@ function doPreviewStuff() {
 <div id="newMenu" style="visibility:hidden;">
     <p><input type='submit' value='Create another menu' onclick='createnewmenu()'></p>
 </div><!--#newMenu-->
-
-<div id="preview" style="visibility:hidden;">
-    <p><input type='submit' value='Preview' onclick='preview()'></p>
-</div><!--#preview-->
 
 </body>
 </html>
