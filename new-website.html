@@ -146,13 +146,25 @@ var basicTemplate = new template('basicTemplate',
 // GLOBAL VAR!!! (for now)
 var templateObj = basicTemplate;
 
+
 function templateChosen() {
     document.getElementById('newPage').style.visibility = "visible";
     document.getElementById('newMenu').style.visibility = "visible";
     var reps = htmlToReps(basicTemplate.html);
     var repObjs = new Array();
     for( var i=0; i<reps.length; i++ ) {
-        repObjs.push( new replacement(reps[i], reps[i]) );
+        if( reps[i].slice(0,4) != "menu" ) {
+            repObjs.push( new replacement(reps[i], reps[i]) );
+        }
+        else {
+            var menuNum = reps[i].slice(4);
+            var pageTitles = new Array('Home', 'About');
+            for( var i=0; i<pageTitles.length; i++ ) {
+                var pageObj = new page(menuNum, i);
+                repObjs.push( pageObj.pageTitle );
+                repObjs.push( pageObj.pageContent );
+            }
+        }
     }
     var myDiv = document.getElementById('dynamic');
 
@@ -160,6 +172,11 @@ function templateChosen() {
         myDiv.innerHTML += repObjs[j].userInputHTML();
     }
 }
+
+
+
+
+
 
 /* Takes template, removes the section from startString to endString' +  
 inclusive, replaces this with insertText, and returns the result */
@@ -222,6 +239,10 @@ function htmltotemplate(html) {
             var myMatchArray = myArray[i].match(fooRegEx2);
             var myMatch = myMatchArray[0];
             var myName = myMatch.slice(9,-3);
+
+            if( myName.slice(0,4) == "menu" ) {
+                alert('myName: ' + myName);
+            }
 
             // Add the reconstructed string:
             template += "<!--START";
@@ -312,6 +333,7 @@ function getPageReplacements(menu, menuRank, replacements) {
 
 function getPage(templateHTML, menu, menuRank, replacements) {
     var pageReps = getPageReplacements(menu, menuRank, replacements);
+    alert('pageReps: ' + pageReps);
     return templateToHTML(templateHTML, pageReps);
 }
 
