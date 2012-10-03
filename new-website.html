@@ -146,33 +146,6 @@ var basicTemplate = new template('basicTemplate',
 // GLOBAL VAR!!! (for now)
 var templateObj = basicTemplate;
 
-
-function templateChosen() {
-    document.getElementById('newPage').style.visibility = "visible";
-    document.getElementById('newMenu').style.visibility = "visible";
-    var reps = htmlToReps(basicTemplate.html);
-    var repObjs = new Array();
-    for( var i=0; i<reps.length; i++ ) {
-        if( reps[i].slice(0,4) != "menu" ) {
-            repObjs.push( new replacement(reps[i], reps[i]) );
-        }
-        else {
-            var menuNum = reps[i].slice(4);
-            var pageTitles = new Array('Home', 'About');
-            for( var i=0; i<pageTitles.length; i++ ) {
-                var pageObj = new page(menuNum, i);
-                repObjs.push( pageObj.pageTitle );
-                repObjs.push( pageObj.pageContent );
-            }
-        }
-    }
-    var myDiv = document.getElementById('dynamic');
-
-    for( var j=0; j<repObjs.length; j++ ) {
-        myDiv.innerHTML += repObjs[j].userInputHTML();
-    }
-}
-
 /* Takes template, removes the section from startString to endString' +  
 inclusive, replaces this with insertText, and returns the result */
 function replaceFoo(template, startString, endString, insertText) {
@@ -272,6 +245,37 @@ function htmlToReps(html) {
     return output;
 }
 
+function processReps(reps) {
+    var repObjs = new Array();
+    for( var i=0; i<reps.length; i++ ) {
+
+        if( reps[i].slice(0,4) != "menu" ) {
+            repObjs.push( new replacement(reps[i], reps[i]) );
+        }
+        else {
+            var menuNum = reps[i].slice(4);
+            var pageTitles = new Array('Home', 'About');
+            for( var i=0; i<pageTitles.length; i++ ) {
+                var pageObj = new page(menuNum, i);
+                repObjs.push( pageObj.pageTitle );
+                repObjs.push( pageObj.pageContent );
+            }
+        }
+    }
+    return repObjs;
+}
+
+function templateChosen() {
+    document.getElementById('newPage').style.visibility = "visible";
+    document.getElementById('newMenu').style.visibility = "visible";
+    var reps = htmlToReps(basicTemplate.html);    
+    var repObjs = processReps(reps);
+    var myDiv = document.getElementById('dynamic');
+    for( var j=0; j<repObjs.length; j++ ) {
+        myDiv.innerHTML += repObjs[j].userInputHTML();
+    }
+}
+
 function makeMenu(menuID, pageTitles) {
     var output = "<div id='" + menuID + "'>";
     for( var i=0; i<pageTitles.length; i++ ) {
@@ -296,15 +300,43 @@ function getPageTitles(replacements, menuNum) {
     }
     return pageTitles;
 }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 function getPageReplacements(menu, menuRank, replacements) {
     var pageReplacements = new Array();
     var myString = "" + menu + "_" + menuRank;
     var pageX_XTitle = "page" + myString + "Title";
     var pageX_XContent = "page" + myString + "Content";
 
+    // This is an array of arrays of page titles
+    var menusIndices = new Array();
+
+    // Get the number of menus
+    for( var i=0; i<replacements.length; i++ ) {
+        if( replacements[i][0].slice(0,4) == "page"  ) {
+            alert(replacements[i][0].slice(4,5));
+
+
+
+
+//////////////////////////
+            numMenus++;
+        }
+    }
+    alert(numMenus);
+    // Make an array of arrays to hold the pageTitles
+    for( var i=0; i<numMenus; i++ ) {
+        menus.push( new Array() );
+    }
+    
     for( var i=0; i<replacements.length; i++ ) {
         if( replacements[i][0].slice(0,4) == "page" ) {
+
+            // Add it to the relevant menu if it is the title
+            if( replacements[i][0].slice(7) == "Title" ) {
+                var menuNum = parseInt( replacements[i][0].slice(4,5) );
+                var pageNum = parseInt( replacements[i][0].slice(6,7) );
+                menus[menuNum][pageNum] = replacements[i][1];
+            }
             if( replacements[i][0] == pageX_XTitle ) {
                 pageReplacements.push( new Array("pageTitle", replacements[i][1]) );
             }
@@ -312,16 +344,15 @@ function getPageReplacements(menu, menuRank, replacements) {
                 pageReplacements.push( new Array("pageContent", replacements[i][1]) );
             }
         }
-        else if( replacements[i][0].slice(0,4) == "menu" ) {
-            var menuNum = replacements[i][0].slice(4);
-            var pageTitles = getPageTitles(replacements, menuNum);
-            var menuHTML = makeMenu(menuNum, pageTitles);
-            pageReplacements.push( new Array( replacements[i][0], menuHTML ));
-
-        }
         else {
             pageReplacements.push( replacements[i] );
         }
+    }
+    // construct the menus and add them in: 
+    for( var i=0; i<menus.length; i++ ) {
+        var myName = "menu" + i;
+        var menuHTML = makeMenu(i, menus[i]);
+        pageReplacements.push( new Array(myName, menuHTML) );
     }
     return pageReplacements;
 }
@@ -331,7 +362,6 @@ function getPage(templateHTML, menu, menuRank, replacements) {
     alert('pageReps: ' + pageReps);
     return templateToHTML(templateHTML, pageReps);
 }
-
 
 var myReplacements = new Array(
     new Array('page0_0Title', "Home"),
@@ -345,8 +375,25 @@ var myReplacements = new Array(
     new Array('footer', 'Copyright March 12 2016 All rights reserved')
 );
 
+function getReplacementsFromForm() {
+    var myReps = new Array();
+
+    // Get all the relevant input elements
+    var myInputs = getElementsByClassName(document, 'userInput');
+
+    for( var i=0; i<myInputs.length; i++ ) {
+        myReps.push( new Array( myInputs[i].name, myInputs[i].value ) );
+    }
+    return myReps;
+}
+
 function doPreviewStuff() {
-    var html = getPage(basicTemplate.html, 0, 0, myReplacements);
+
+    // AT SOME POINT DO PROCESSING FOR PAGE AND MENU 
+    
+    var myReps = getReplacementsFromForm();
+
+    var html = getPage(basicTemplate.html, 0, 0, myReps);
     html = "data:text/html;charset=utf-8," + html;
     window.open(html);
 }
@@ -366,8 +413,6 @@ function doPreviewStuff() {
     </select>
 </p>
 
-<p><input type="submit" value="View page" onclick="doPreviewStuff()" ></input></p>
-
 <div id="dynamic">
 
 </div><!--#dynamic-->
@@ -379,6 +424,9 @@ function doPreviewStuff() {
 <div id="newMenu" style="visibility:hidden;">
     <p><input type='submit' value='Create another menu' onclick='createnewmenu()'></p>
 </div><!--#newMenu-->
+
+<p><input type="submit" value="View page" onclick="doPreviewStuff()" ></input></p>
+
 
 </body>
 </html>
