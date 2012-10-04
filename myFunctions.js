@@ -106,7 +106,7 @@ function Replacement(shortName, niceName, content, inputType) {
     this.userInputHTML = function () {
         var html = "<p>" + this.niceName + ":<input type='text' class='userInput' value='" + this.content + "' id='" + this.shortName + "'></p>";
         if (this.inputType=='color') {
-            html = "<p>" + this.niceName + ":<input type='text' class='userInput'  value='" + this.content + " id='" + this.shortName + "'></p>";
+            html = "<p>" + this.niceName + ":<input type='text' class='color userInput'  value='" + this.content + " id='" + this.shortName + "'></p>";
         }
         return html;
     };

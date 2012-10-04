@@ -6,13 +6,13 @@
 <script type="text/javascript" src="jscolor/jscolor.js"></script>
 <script type="text/javascript">
 
-var html = "<html><head><style>body {    color: /*STARTtextColor*/%2300ffcc/*textColorEND*/;    background-color: /*STARTbgColor*/cyan/*bgColorEND*/;}%23container {    width: 600px;    margin: 0px auto;    padding: 10px 60px;    background-color: %23ffffff;}a {    color:/*STARTlinkColor*/red/*linkColorEND*/;}</style></head><body><div id='container'><h1><!--STARTwebsiteTitle-->Welcome to my new website!<!--websiteTitleEND--></h1> <!--STARTmenu0--><div class='menu' id='menu1'> <ul><li><a href='Home'>Home</a></li></ul></div><!--menu0END-->  <!--STARTpageContent--> <!--pageContentEND--><p><!--STARTfooter-->This is the bottom of the page. Thanks for reading!<!--footerEND--></p></div></body></html>";
+var html = "<html><head><style>body {    color: /*STARTtextColor*/00ffcc/*textColorEND*/;    background-color: /*STARTbgColor*/0000cc/*bgColorEND*/;}container {    width: 600px;    margin: 0px auto;    padding: 10px 60px;    background-color: ffffff;}a {    color: /*STARTlinkColor*/ccffff/*linkColorEND*/;}</style></head><body><div id='container'><h1><!--STARTwebsiteTitle-->Welcome to my new website!<!--websiteTitleEND--></h1> <!--STARTmenu0--><div class='menu' id='menu1'> <ul><li><a href='Home'>Home</a></li></ul></div><!--menu0END-->  <!--STARTpageContent--> <!--pageContentEND--><p><!--STARTfooter-->This is the bottom of the page. Thanks for reading!<!--footerEND--></p></div></body></html>";
 
 var r1 = new Replacement('websiteTitle', 'Website title', 'Welcome to my new website!','text');
 var r2 = new Replacement('footer', 'Footer', 'This is the bottom of the page. Thanks for reading!','text');
-var r3 = new CssReplacement('textColor', 'Text colour', '%23424242', 'color');
-var r4 = new CssReplacement('bgColor', 'Background colour', '%23ffeecd', 'color');
-var r5 = new CssReplacement('linkColor', 'Link colour', '%23ff00cc', 'color');
+var r3 = new CssReplacement('textColor', 'Text colour', '424242', 'color');
+var r4 = new CssReplacement('bgColor', 'Background colour', 'ffeecd', 'color');
+var r5 = new CssReplacement('linkColor', 'Link colour', 'ff00cc', 'color');
 var p1 = new PageRep(1, 1, 'Home', "<h2>Lorem!</h2>");
 var reps = [r1, r2,r3, r4, r5];
 var preps = [p1];
@@ -23,6 +23,11 @@ function doTheThing() {
         for (var j=0; j<reps.length; j++) {
             if (reps[j].shortName == objs[i].id) {
                 reps[j].content = objs[i].value;
+
+                // prepend a '#' to hex colors
+                if (reps[j].inputType == 'color') {
+                    reps[j].content = "%23" + objs[i].value;
+                }
                 break;
             }
         }
@@ -49,11 +54,8 @@ function octopus() {
 
 <h1>Foofurple simple website editor</h1>
 
-
-        <input type="text" class="color" value="3496CF"
-             onChange='changePanelBGColor()'>
-
-
+Color chooser:
+ <input type="text" class="color" value="3496CF">
 
 <div id="userInput">
 

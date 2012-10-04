@@ -56,6 +56,35 @@ function replaceFoo(template, startString, endString, insertText) {
     }
 }
 
+/* Function getElementsByClassName(node,classname) by Dustin Diaz, found here: 
+http://stackoverflow.com/questions/1933602/
+how-to-getelementbyclass-instead-of-getelementbyid-with-javascript*/
+function getElementsByClassName(node, classname) {
+  if (node.getElementsByClassName) { // use native implementation if available
+    return node.getElementsByClassName(classname);
+  } else {
+    return (function getElementsByClass(searchClass,node) {
+        if ( node == null )
+          node = document;
+        var classElements = [],
+            els = node.getElementsByTagName("*"),
+            elsLen = els.length,
+            pattern = new RegExp("(^|\\s)"+searchClass+"(\\s|$)"), i, j;
+
+        for (i = 0, j = 0; i < elsLen; i++) {
+          if ( pattern.test(els[i].className) ) {
+              classElements[j] = els[i];
+              j++;
+          }
+        }
+        return classElements;
+    })(classname, node);
+  }
+}
+
+
+
+
 /*
 
 ***************************************** MODEL CLASSES ***********************************************
@@ -77,7 +106,7 @@ function Replacement(shortName, niceName, content, inputType) {
     this.userInputHTML = function () {
         var html = "<p>" + this.niceName + ":<input type='text' class='userInput' value='" + this.content + "' id='" + this.shortName + "'></p>";
         if (this.inputType=='color') {
-            html = "<p>" + this.niceName + ":<input type='text' class='userInput'  value='" + this.content + " id='" + this.shortName + "'></p>";
+            html = "<p>" + this.niceName + ":<input type='text' class='userInput color'  value='" + this.content + " id='" + this.shortName + "'></p>";
         }
         return html;
     };
