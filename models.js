@@ -65,13 +65,21 @@ function getElementsByClassName(node, classname) {
 */
 
 // Class 'replacement' definition
-function Replacement(shortName, niceName, content, inputType) {
+function Replacement(shortName, niceName, content, inputType, repType) {
+
     this.shortName = shortName;
     this.niceName = niceName;
-    this.startString = "<!--START" + shortName + "-->";
-    this.endString = "<!--" + shortName + "END-->";
     this.content = content;
     this.inputType = inputType;     // 'text' or 'color'
+    this.repType = repType;         // 'rep' or 'css'
+
+    this.startString = "<!--START" + shortName + "-->";
+    this.endString = "<!--" + shortName + "END-->";
+
+    if (this.repType == "css") {
+        this.startString = "/*START" + shortName + "*/";
+        this.endString = "/*" + shortName + "END*/";
+    }
 
     this.toString = function () {
       return 'replacement object: ' + this.niceName;
@@ -88,36 +96,7 @@ function Replacement(shortName, niceName, content, inputType) {
     this.userInputHTML = function () {
         var html = "<p>" + this.niceName + ":<input type='text' class='text userInput' value='" + this.content + "' id='" + this.shortName + "'></p>";
         if (this.inputType=='color') {
-            html = "<p>" + this.niceName + ":<input type='text' class='color userInput'  value='" + this.content + " id='" + this.shortName + "'></p>";
-        }
-        return html;
-    };
-}
-
-function CssReplacement(shortName, niceName, content, inputType) {
-    this.shortName = shortName;
-    this.niceName = niceName;
-    this.startString = "/*START" + shortName + "*/";
-    this.endString = "/*" + shortName + "END*/";
-    this.content = content;
-    this.inputType = inputType;     // 'text' or 'color'
-
-    this.toString = function () {
-      return 'replacement object: ' + this.niceName;
-    };
-
-    this.getSetContent = function(text) {
-        var myArray = text.split(this.startString);
-        var myString = myArray[1];
-        var myArray2 = myString.split(this.endString);
-        this.content = myArray2[0];
-        return this.content;
-    }
-
-    this.userInputHTML = function () {
-        var html = "<p>" + this.niceName + ":<input type='text' class='userInput'  value='" + this.content + "' id='" + this.shortName + "' name='" + this.shortName + "'> </p>";
-        if (this.inputType=='color') {
-            html = "<p>" + this.niceName + ":<input type='text' class='userInput'  value='" + this.content + "' id='" + this.shortName + "' name='" + this.shortName + "'></p>";
+            html = "<p>" + this.niceName + ":<input type='text' class='color userInput'  value='" + this.content + "' id='" + this.shortName + "'></p>";
         }
         return html;
     };
@@ -169,41 +148,4 @@ function SiteTemplate(templateName, html, maxMenus, defaultSiteReplacements, def
         return htmlOut;
     };
 }
-
-/*
-      ****************************** FUNCTIONS TO ACT ON MODELS ******************************
-*/
-function removePage(menu, menuRank) {
-    var pagesArray = new Array();
-    for( var i=0; i<templateObj.pages.length; i++ ) {
-
-        // Leave out the page we're removing
-        if ( !(templateObj.pages[i].menu == menu && templateObj.pages[i].menuRank == menuRank) ) {
-
-            // If a page is in the same menu and has a higher menuRank than the one
-            // that is removed, subtract 1 from its menuRank
-            if( templateObj.pages[i].menu == menu && templateObj.pages[i].menuRank > menuRank ) {
-                templateObj.pages[i].menuRank -= 1;
-            }
-            pagesArray.push(templateObj.pages[i]);
-        }
-    }
-    templateObj.pages = pagesArray;
-    templateChosen();
-}
-
-function getStartString(myName) {    
-    return "<!--START" + myName + "-->";
-}
-function getEndString(myName) {
-    return "<!--" + myName + "END-->";
-}
-
-function templateToHTML(template, repsArray) {
-    for ( var i=0; i<repsArray.length; i++ ) {
-        template = replaceFoo(template, getStartString( repsArray[i][0] ), getEndString( repsArray[i][0] ), repsArray[i][1] );
-    }
-    return template;
-}
-
 

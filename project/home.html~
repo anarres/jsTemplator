@@ -2,39 +2,8 @@
 
 <head>
 
-<!--STARTjsTemplatorData
-THIS WILL BE JSON
-
-
-
-
-
-{"replacements": [
-{"shortName":"websiteTitle", "niceName":"Website title", "inputType":"text"},
-
-{"shortName":"websiteTitle", "niceName":"Website title", "inputType":"text"},
-
-{"shortName":"websiteTitle", "niceName":"Website title", "inputType":"text"},
-
-{"shortName":"websiteTitle", "niceName":"Website title", "inputType":"text"},
-
-{"shortName":"websiteTitle", "niceName":"Website title", "inputType":"text"},
-
-
-
-
-var r1 = new Replacement('websiteTitle', 'Website title', 'Welcome to my new website!','text');
-var r2 = new Replacement('footer', 'Footer', 'This is the bottom of the page. Thanks for reading!','text');
-var r3 = new CssReplacement('textColor', 'Text colour', '424242', 'color');
-var r4 = new CssReplacement('bgColor', 'Background colour', 'ffeecd', 'color');
-var r5 = new CssReplacement('linkColor', 'Link colour', 'ff00cc', 'color');
-var p1 = new PageRep(1, 1, 'Home', "<h2>Lorem!</h2>");
-var reps = [r1, r2,r3, r4, r5];
-var preps = [p1];
-
-
-
-jsTemplatorDataEND-->
+<!--STARTjsTemplatorData{"replacements": [{"shortName":"websiteTitle", "niceName":"Website title", "inputType":"text", "repType":"rep"}, {"shortName":"bgColor", "niceName":"Background color", "inputType":"color", "repType":"css"}, {"shortName":"textColor", "niceName":"Text color", "inputType":"color", "repType":"css"}, 
+{"shortName":"linkColor", "niceName":"Link color", "inputType":"color", "repType":"css"}, {"shortName":"footer", "niceName":"Footer", "inputType":"text", "repType":"rep"}]}jsTemplatorDataEND-->
 
 <style type="text/css">
 body {    

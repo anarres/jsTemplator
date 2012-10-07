@@ -13,23 +13,34 @@ function foo() {
     alert('foo!');
 }
 
-var txt = '{"employees":[' +
-'{"firstName":"John","lastName":"Doe" },' +
-'{"firstName":"Anna","lastName":"Smith" },' +
-'{"firstName":"Peter","lastName":"Jones" }]}';
+// Global vars
+var repsFoo = [];
+var htmlFoo = "";
 
-obj = JSON.parse(txt);
 
-//alert(obj.employees[1].firstName); 
-//alert(obj.employees[1].lastName);
+//unescape
+
+function preview() {
+
+    // Update repsFoo & make replacements into htmlFoo
+    for (var i=0; i<repsFoo.length; i++) {
+        repsFoo[i].content = document.getElementById(repsFoo[i].shortName).value;
+        htmlFoo = replaceFoo(htmlFoo, repsFoo[i].startString, repsFoo[i].endString, repsFoo[i].content);
+    }
+    var htmlOut = "data:text/html;charset=utf-8, " + escape(htmlFoo);
+    window.open(htmlOut, '_blank');
+}
+
 
 function maliciousFish(fileText) {
+    htmlFoo = fileText;
     var jstDataString = getData(fileText);
     var jstData = JSON.parse(jstDataString);
-
     var reps = [];
+
     for (var j=0; j<jstData["replacements"].length; j++) {
-        var r = new Replacement(jstData["replacements"][j]["shortName"], jstData["replacements"][j]["niceName"], "", jstData["replacements"][j]["inputType"]);
+        var r = new Replacement(jstData["replacements"][j]["shortName"], jstData["replacements"][j]["niceName"], "", jstData["replacements"][j]["inputType"], jstData["replacements"][j]["repType"]);
+
         r.getSetContent(fileText);
         reps.push(r);
     }
@@ -39,7 +50,7 @@ function maliciousFish(fileText) {
             document.getElementById('userInput').innerHTML += reps[i].userInputHTML();
         }
     }
-
+    repsFoo = reps;
     document.getElementById('userInput').innerHTML += "<button onclick='preview()'>Preview website</button>";
 }
 
@@ -55,7 +66,6 @@ function squidAndSharks() {
         var reader = new FileReader();
         reader.onload = function(event) {
             var fileContents = event.target.result;
-            //alert(fileContents.length);
             maliciousFish(fileContents);
         };
         reader.onerror = function(event) {
