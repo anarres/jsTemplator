@@ -1,0 +1,15 @@
+f = open('perfectLayoutTest', 'r')
+lines = f.readlines()
+
+out = "var html = "
+
+for l in lines:
+    l = l.replace("\n", "")
+    l = l.replace("\\", "\\\\")
+    out += "\" %s \" +  \\ \n" % l
+
+out += " \"\";  "
+
+fout = open('outfile.txt', 'w')
+fout.write(out)
+fout.close() 

@@ -1,0 +1,220 @@
+<html>
+
+<body>
+
+<h1>hellow world</h1>
+
+<script>
+
+var html = " <!DOCTYPE html> " +  \ 
+"  " +  \ 
+" <html> " +  \ 
+" <head> " +  \ 
+" <meta http-equiv='Content-Type' content='text/html;charset=utf-8'> " +  \ 
+" <title>Two-column layout that works for all screen resolutions</title> " +  \ 
+"  " +  \ 
+" <style type='text/css'> " +  \ 
+" /* Overall layout */ " +  \ 
+" * { " +  \ 
+"     margin: 0px; " +  \ 
+"     padding: 0px; " +  \ 
+" } " +  \ 
+" body { " +  \ 
+"     max-width:700px; " +  \ 
+"     margin: 0px auto; " +  \ 
+" } " +  \ 
+" #main { " +  \ 
+"     max-width: 500px; " +  \ 
+"     min-width: 100px; " +  \ 
+"     margin-left: 10px; " +  \ 
+"     float: left; " +  \ 
+" } " +  \ 
+" #main img { " +  \ 
+"     max-width: 450px; " +  \ 
+" } " +  \ 
+" #widgets { " +  \ 
+"     min-width: 100px; " +  \ 
+"     max-width: 200px; " +  \ 
+"     float: left; " +  \ 
+" } " +  \ 
+" #widgets img { " +  \ 
+"     max-width: 100px; " +  \ 
+" } " +  \ 
+" #main, #widgets { " +  \ 
+"     margin-bottom: 50px; " +  \ 
+" } " +  \ 
+" #footer { " +  \ 
+"     clear: both; " +  \ 
+" } " +  \ 
+"  " +  \ 
+" /* Typography */ " +  \ 
+" body { " +  \ 
+"     font-family: Helvetica, sans-serif; " +  \ 
+"     color: #1e0f01; " +  \ 
+"     font-size: 12px; " +  \ 
+" } " +  \ 
+" h1 { " +  \ 
+"     font-size: 5em; " +  \ 
+"     font-weight: normal; " +  \ 
+" } " +  \ 
+" h2, h3, h4, h5, h6 { " +  \ 
+"     font-size: 1.3em; " +  \ 
+"     font-weight: normal; " +  \ 
+"     padding: 5px 0px; " +  \ 
+" } " +  \ 
+" p { " +  \ 
+"     line-height: 1.2em; " +  \ 
+"     padding: 3px 0px; " +  \ 
+" } " +  \ 
+" a { " +  \ 
+"     color: #056c9b; " +  \ 
+"     text-decoration: underline; " +  \ 
+" } " +  \ 
+" a:hover { " +  \ 
+"     color: #056fec; " +  \ 
+" } " +  \ 
+"  " +  \ 
+"  " +  \ 
+" /* Nav */ " +  \ 
+"   " +  \ 
+" #nav { " +  \ 
+"     margin: 10px 0px; " +  \ 
+" } " +  \ 
+" #nav li { " +  \ 
+"     display: inline; " +  \ 
+"     list-style: none; " +  \ 
+" } " +  \ 
+" #nav a { " +  \ 
+"     padding: 3px 10px; " +  \ 
+"     font-size: 0.9em; " +  \ 
+" } " +  \ 
+"  " +  \ 
+" /* Header */ " +  \ 
+"  " +  \ 
+" #header { " +  \ 
+"     margin: 10px 0px; " +  \ 
+"     padding: 10px 0px; " +  \ 
+"     border-top: 1px dotted #cccccc; " +  \ 
+"     border-bottom: 1px dotted #cccccc; " +  \ 
+" } " +  \ 
+" #header p { " +  \ 
+"     color: grey; " +  \ 
+"     padding: 0px; " +  \ 
+"     margin-right: 5px; " +  \ 
+" } " +  \ 
+"  " +  \ 
+" /* Widgets */ " +  \ 
+"  " +  \ 
+" .widget { " +  \ 
+"     font-size: 0.9em; " +  \ 
+"     padding-left: 50px; " +  \ 
+"     border-bottom: 1px dotted #cccccc; " +  \ 
+" } " +  \ 
+"  " +  \ 
+" /* Footer */ " +  \ 
+"  " +  \ 
+" #footer { " +  \ 
+"     font-size: 0.85em; " +  \ 
+"     text-align: center; " +  \ 
+"     margin: 5px 0px; " +  \ 
+"     padding: 5px 0px; " +  \ 
+"     border-top: 1px dotted #cccccc; " +  \ 
+"     border-bottom: 1px dotted #cccccc; " +  \ 
+" } " +  \ 
+"  " +  \ 
+" </style> " +  \ 
+" </head> " +  \ 
+"  " +  \ 
+" <body> " +  \ 
+"  " +  \ 
+" <div id='nav'> " +  \ 
+" <ul> " +  \ 
+"     <li><a href=''>Account settings</a></li> " +  \ 
+"     <li><a href=''>Some other stuff</a></li> " +  \ 
+"     <li><a href=''>Gallery</a></li> " +  \ 
+"     <li><a href=''>Aardvarks</a></li> " +  \ 
+" </ul> " +  \ 
+" </div> <!--#nav--> " +  \ 
+"  " +  \ 
+" <div id='header'> " +  \ 
+" <h1>header</h1> " +  \ 
+" <p>A tagline can go here.</p> " +  \ 
+" </div> <!--#header--> " +  \ 
+"  " +  \ 
+" <div id='main'> " +  \ 
+"  " +  \ 
+" <div class='updateYourStatus'> " +  \ 
+"  " +  \ 
+" <h2>Update your status</h2> " +  \ 
+"  " +  \ 
+" <textarea>Awesomeness...</textarea> " +  \ 
+"  " +  \ 
+" </div> <!--.updateYourStatus--> " +  \ 
+"  " +  \ 
+" <h2>Your stream:</h2> " +  \ 
+"  " +  \ 
+"  " +  \ 
+" <img src='http://openclipart.org/image/250px/svg_to_png/StudioFibonacci_Cartoon_peacock.png' /> " +  \ 
+"  " +  \ 
+"  " +  \ 
+" <div class='streamItem'> " +  \ 
+"  " +  \ 
+" <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.</p> " +  \ 
+"  " +  \ 
+" <p>Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis.</p> " +  \ 
+"  " +  \ 
+" </div> <!--.streamItem--> " +  \ 
+"  " +  \ 
+" <div class='streamItem'> " +  \ 
+"  " +  \ 
+" <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.</p> " +  \ 
+"  " +  \ 
+" <p>Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis.</p> " +  \ 
+"  " +  \ 
+" <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.</p> " +  \ 
+"  " +  \ 
+" <p>Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis.</p> " +  \ 
+" </div> <!--.streamItem--> " +  \ 
+"  " +  \ 
+" </div> <!--#main--> " +  \ 
+"  " +  \ 
+" <div id='widgets'> " +  \ 
+"  " +  \ 
+" <div class='widget'> " +  \ 
+" <p>Here is a widget.</p> " +  \ 
+" <img src='http://openclipart.org/image/250px/svg_to_png/StudioFibonacci_Cartoon_peacock.png' /> " +  \ 
+"  " +  \ 
+" </div> <!--.widget--> " +  \ 
+"  " +  \ 
+" <div class='widget'> " +  \ 
+" <p>Here is another widget.</p> " +  \ 
+" </div> <!--.widget--> " +  \ 
+"  " +  \ 
+" <div class='widget'> " +  \ 
+" <p>Here is another widget.</p> " +  \ 
+" </div> <!--.widget--> " +  \ 
+"  " +  \ 
+" <div class='widget'> " +  \ 
+" <p>Here is another widget.</p> " +  \ 
+" </div> <!--.widget--> " +  \ 
+"  " +  \ 
+" <div class='widget'> " +  \ 
+" <p>Here is another widget.</p> " +  \ 
+" </div> <!--.widget--> " +  \ 
+"  " +  \ 
+" </div> <!--#widgets--> " +  \ 
+"  " +  \ 
+" <div id='footer'> " +  \ 
+" <p>This is the footer. Some info goes here.</p> " +  \ 
+" </div> <!--#footer--> " +  \ 
+"  " +  \ 
+" </body> " +  \ 
+"  " +  \ 
+" </html> " +  \ 
+ "";  
+
+alert('foo');
+</script>
+</body>
+
+</html>

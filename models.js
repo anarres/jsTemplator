@@ -1,15 +1,7 @@
 /*
-
 *************************************** GLOBAL VARS AND GENERAL CONVENIENCE FUNCTIONS *******************
-
 */
 
-//var fooRegEx = /<!--START[\s\S]*?END-->/gm; //Are these even used???
-//var fooRegEx2 = /<!--START[\s\S]*?-->/gm;
-
-function foo() {
-    alert('foo!');
-}
 function slugify(text) {
 	text = text.replace(/[^-a-zA-Z0-9,&\s]+/ig, '');
 	text = text.replace(/-/gi, "_");
@@ -24,19 +16,6 @@ function removeItemFromArray(array, index) {
     array.pop();
     return array;
 }
-
-/* Allows a 2D array to be treated like a Python dictionary 
-myArray looks like this: 
-[ ['species','cat'], ['name','Fluffy'], ['age','7 years'] ] */
-function giveNameGetValue(myArray, myName) {
-    for( var i=0; i<myArray.length; i++ ) {
-        if( myArray[i][0] == myName ) {
-            return myArray[i][1];
-        }
-    }
-    return false;
-}
-
 /* Takes template, removes the section from startString to endString' +  
 inclusive, replaces this with insertText, and returns the result */
 function replaceFoo(template, startString, endString, insertText) {
@@ -55,7 +34,6 @@ function replaceFoo(template, startString, endString, insertText) {
         return template;
     }
 }
-
 /* Function getElementsByClassName(node,classname) by Dustin Diaz, found here: 
 http://stackoverflow.com/questions/1933602/
 how-to-getelementbyclass-instead-of-getelementbyid-with-javascript*/
@@ -82,13 +60,8 @@ function getElementsByClassName(node, classname) {
   }
 }
 
-
-
-
 /*
-
 ***************************************** MODEL CLASSES ***********************************************
-
 */
 
 // Class 'replacement' definition
@@ -103,15 +76,23 @@ function Replacement(shortName, niceName, content, inputType) {
     this.toString = function () {
       return 'replacement object: ' + this.niceName;
     };
+
+    this.getSetContent = function(text) {
+        var myArray = text.split(this.startString);
+        var myString = myArray[1];
+        var myArray2 = myString.split(this.endString);
+        this.content = myArray2[0];
+        return this.content;
+    }
+
     this.userInputHTML = function () {
-        var html = "<p>" + this.niceName + ":<input type='text' class='userInput' value='" + this.content + "' id='" + this.shortName + "'></p>";
+        var html = "<p>" + this.niceName + ":<input type='text' class='text userInput' value='" + this.content + "' id='" + this.shortName + "'></p>";
         if (this.inputType=='color') {
             html = "<p>" + this.niceName + ":<input type='text' class='color userInput'  value='" + this.content + " id='" + this.shortName + "'></p>";
         }
         return html;
     };
 }
-
 
 function CssReplacement(shortName, niceName, content, inputType) {
     this.shortName = shortName;
@@ -125,6 +106,14 @@ function CssReplacement(shortName, niceName, content, inputType) {
       return 'replacement object: ' + this.niceName;
     };
 
+    this.getSetContent = function(text) {
+        var myArray = text.split(this.startString);
+        var myString = myArray[1];
+        var myArray2 = myString.split(this.endString);
+        this.content = myArray2[0];
+        return this.content;
+    }
+
     this.userInputHTML = function () {
         var html = "<p>" + this.niceName + ":<input type='text' class='userInput'  value='" + this.content + "' id='" + this.shortName + "' name='" + this.shortName + "'> </p>";
         if (this.inputType=='color') {
@@ -132,11 +121,7 @@ function CssReplacement(shortName, niceName, content, inputType) {
         }
         return html;
     };
-
 }
-
-
-
 
 // Class 'page' definition - both arguments are integers
 function PageRep(menu, menuRank, title, content) {
@@ -153,12 +138,13 @@ function PageRep(menu, menuRank, title, content) {
 }
 
 // For a whole website
-function SiteTemplate(templateName, html, maxMenus, defaultSiteReplacements, defaultPageReplacements) {
+function SiteTemplate(templateName, html, maxMenus, defaultSiteReplacements, defaultPageReplacements, desc) {
     this.templateName = templateName;
     this.html = html;
     this.maxMenus = maxMenus;   // Number of menus: 1,2,3...
     this.siteReps = defaultSiteReplacements;
     this.pageReps = defaultPageReplacements;
+    this.desc = desc;
 
     this.toString = function () {
       return 'SiteTemplate object: ' + this.templateName;
@@ -184,11 +170,9 @@ function SiteTemplate(templateName, html, maxMenus, defaultSiteReplacements, def
     };
 }
 
-
 /*
       ****************************** FUNCTIONS TO ACT ON MODELS ******************************
 */
-
 function removePage(menu, menuRank) {
     var pagesArray = new Array();
     for( var i=0; i<templateObj.pages.length; i++ ) {
@@ -221,8 +205,5 @@ function templateToHTML(template, repsArray) {
     }
     return template;
 }
-
-
-
 
 

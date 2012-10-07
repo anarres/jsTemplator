@@ -39,8 +39,6 @@ function maliciousFish(fileText) {
             document.getElementById('userInput').innerHTML += reps[i].userInputHTML();
         }
     }
-
-    document.getElementById('userInput').innerHTML += "<button onclick='preview()'>Preview website</button>";
 }
 
 function squidAndSharks() {

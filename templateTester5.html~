@@ -56,21 +56,17 @@ function generateUserInputFields() {
 
 <h1>Foofurple simple website editor</h1>
 
-<div id="templateSeletor">
-
 <h2>Please select a website template</h2>
 
-<ul
-<li><input type='radio' name='t'>Basic template</input></li>
-<li><input type='radio' name='t'>Aardvark template</input></li>
-<li><input type='radio' name='t'>Octopus</input></li>
-<li><input type='radio' name='t'>Nonapus</input></li>
-<li><input type='radio' name='t'>Extinct dodo cahedron</input></li>
+<ul id="templateSeletor">
+<li class='chooseTemplate'><input type='radio' name='t'>Basic template</input></li>
+<li class='chooseTemplate'><input type='radio' name='t'>Aardvark template</input></li>
+<li class='chooseTemplate'><input type='radio' name='t'>Octopus</input></li>
+<li class='chooseTemplate'><input type='radio' name='t'>Nonapus</input></li>
+<li class='chooseTemplate'><input type='radio' name='t'>Extinct dodo cahedron</input></li>
 </ul>
 
-</div> <!--#templateSelector-->
-
-<br><br>
+<div style="height:10px;margin:10px 0px; clear:both;">---------------<br><br><br><br><br><br><br></div>
 
 Color chooser (use this to select 6-digit colour values):
  <input type="text" class="color" value="3496CF">
