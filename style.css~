@@ -1,6 +1,6 @@
 /* General layout */
 
-html, body {
+html, body, div {
     margin: 0px;
     padding: 0px;
     border: 0px;

@@ -45,15 +45,6 @@ a {
 a:hover {
     color: #0C1BEB;
 }
-li.chooseTemplate {
-    list-style: none;
-    float: left;
-    width: 200px;
-    padding: 5px;
-    margin: 3px;
-    border: 1px solid grey;
-    list-style: none;
-}
 input {
     padding: 5px;
     display: block;
@@ -62,11 +53,6 @@ input.text {
     width: 500px;
     display: block;
 }
-input.color {
-    width: 450px;
-    display: block;
-}
-
 button {
     padding: 5px 10px;
     margin: 15px auto;

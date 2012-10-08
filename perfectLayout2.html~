@@ -5,6 +5,8 @@
 
 <!--STARTjsTemplatorData{"replacements": [{"shortName":"websiteTitle", "niceName":"Website title", "inputType":"text", "repType":"rep"}, {"shortName":"footer", "niceName":"Footer", "inputType":"text", "repType":"rep"}]}jsTemplatorDataEND-->
 
+"pageReplacements": [{"shortName":"pageContent", "niceName":"Page content", "inputType":"textarea", "repType":"rep"}]
+
 
 <meta http-equiv='Content-Type' content='text/html;charset=utf-8'>
 <title>Two-column layout that works for all screen resolutions</title>

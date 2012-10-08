@@ -28,10 +28,10 @@ function preview() {
     window.open(htmlOut, '_blank');
 }
 
-
 function maliciousFish(fileText) {
     htmlFoo = fileText;
     var jstDataString = getData(fileText);
+
     var jstData = JSON.parse(jstDataString);
     var reps = [];
 
@@ -44,11 +44,17 @@ function maliciousFish(fileText) {
     var output = "";
     for (var i=0; i<reps.length; i++) {
         if (reps[i].shortName.slice(0,4) != "menu") {
-            document.getElementById('userInput').innerHTML += reps[i].userInputHTML();
+            output += reps[i].userInputHTML();
         }
     }
     repsFoo = reps;
-    document.getElementById('userInput').innerHTML += "<button onclick='preview()'>Preview website</button>";
+    output += "<button onclick='preview()'>Preview website</button>";
+    document.getElementById('userInput').innerHTML = output;
+
+    var colorArray = getElementsByClassName(document, 'color');
+    for (var k=0; k<colorArray.length; k++) {
+        new jscolor.color(colorArray[k], {});
+    }
 }
 
 function squidAndSharks() {
@@ -90,11 +96,6 @@ function squidAndSharks() {
 
 </div> <!--#userInput-->
 
-<!--
-Color chooser (use this to select 6-digit colour values):
- <input type="text" class="color" value="3496CF">
-<button onclick='preview()'>Preview website</button>
--->
 
 </div> <!--#container-->
 
