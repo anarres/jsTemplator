@@ -34,10 +34,6 @@ function preview() {
 
     var menuRep = new Replacement("menu", "Menu", menuHtml, "", "menu"];
 */
-
-
-
-
     // Update repsFoo & make replacements into htmlFoo
     for (var i=0; i<repsFoo.length; i++) {
         repsFoo[i].content = document.getElementById(repsFoo[i].shortName).value;
@@ -46,6 +42,17 @@ function preview() {
         }
         htmlFoo = replaceFoo(htmlFoo, repsFoo[i].startString, repsFoo[i].endString, repsFoo[i].content);
     }
+
+
+    for (var r=0; r<pageRepsFoo.length; r++) {
+        pageRepsFoo[r].content = document.getElementById(pageRepsFoo[r].shortName).value;
+
+
+        htmlFoo = replaceFoo(htmlFoo, repsFoo[i].startString, repsFoo[i].endString, repsFoo[i].content);
+    }
+
+
+
     var htmlOut = "data:text/html;charset=utf-8, " + escape(htmlFoo);
     window.open(htmlOut, '_blank');
 }
@@ -74,8 +81,30 @@ function maliciousFish(fileText) {
         }
     }
     repsFoo = reps;
-    output += "<button onclick='preview()'>Preview website</button>";
     document.getElementById('userInput').innerHTML = output;
+
+    // Add the menu info
+    pageOutput = "<p>Pages in this website: ";
+    for (var n=0; n<jstData['menu'].length; n++) {
+        pageOutput += jstData['menu'][n].name;
+        pageOutput += ", ";
+    }
+    pageOutput += "</p>";
+
+    for (var p=0; p<jstData['pageReplacements'].length; p++) {
+        var pRep = new Replacement( jstData['pageReplacements'][p]["shortName"], jstData['pageReplacements'][p]["niceName"], "", jstData['pageReplacements'][p]["inputType"], jstData['pageReplacements'][p]["repType"]);
+        pRep.getSetContent(fileText);
+        pageReps.push(pRep);
+    }
+    pageRepsFoo = pageReps;
+
+    for (var q=0; q<pageReps.length; q++) {
+        pageOutput += pageReps[q].userInputHTML();
+    }
+
+    // New page button
+    pageOutput += "<button onclick='newPage()'>Create a new page</button>";
+    document.getElementById('pageUserInput').innerHTML = pageOutput;
 
     // Initialize the new jscolor widgets
     var colorArray = getElementsByClassName(document, 'color');
@@ -106,6 +135,18 @@ function squidAndSharks() {
     }
 }
 
+function newPage() {
+    foo();
+}
+function toSiteView() {
+    document.getElementById('page').style.visibility = "hidden";
+    document.getElementById('wholeSite').style.visibility = "visible";
+}
+function toPageView() {
+    document.getElementById('wholeSite').style.visibility = "hidden";
+    document.getElementById('page').style.visibility = "visible";
+}
+
 </script>
 
 </head>
@@ -116,17 +157,29 @@ function squidAndSharks() {
 
 <h1>Foofurple simple website editor</h1>
 
-<h2>Use this page to edit things that affect the whole website, like the title and background color. Use <a href='page-editor.html'>the Page Editor</a> to edit individual pages of your website.</h2>
+<button onclick="toSiteView()">Edit whole website</button>
+<button onclick="toPageView()">Edit individual pages</button>
+<button onclick="preview()">Preview</button><br><br>
 
 <div>
 	<label for="fileselect">To work on an existing project, please upload project files:</label>
 	<input id="fileselect" name="fileselect[]" multiple="multiple" type="file" onchange="squidAndSharks()" />
 </div>
 
-<div id="userInput">
+<div id="wholeSite" style="position:absolute;visibility:visible;">
 
-</div> <!--#userInput-->
+    <div id="userInput">
 
+    </div> <!--#userInput-->
+</div> <!--#wholeSite-->
+
+<div id="page" style="position:absolute;visibility:hidden;">
+
+    <div id="pageUserInput">
+
+    </div> <!--#pageUserInput-->
+
+</div> <!--#page-->
 
 </div> <!--#container-->
 

@@ -17,8 +17,7 @@
     {"shortName":"footer", "niceName":"Footer", "inputType":"text", "repType":"rep"},
 
     {"shortName":"pageTitle", "niceName":"Page title", "inputType":"text", "repType":"page"},
-    {"shortName":"pageContent", "niceName":"Page content", "inputType":"textarea", "repType":"page"}
-],
+    {"shortName":"pageContent", "niceName":"Page content", "inputType":"textarea", "repType":"page"}],
 "menu": [
     {"name":"Home", "relUrl":"home.html", "current":"yes"}
 ]
@@ -156,7 +155,7 @@ a:hover {
 
 <div id="menu">
 <ul>
-<li><a href="home.html">Home</a></li>
+<li><a href="home.html"><!--STARTpageTitle-->Home<!--pageTitleEND--></a></li>
 </ul>
 </div> <!--#menu-->
 
