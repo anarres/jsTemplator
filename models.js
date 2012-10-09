@@ -70,8 +70,8 @@ function Replacement(shortName, niceName, content, inputType, repType) {
     this.shortName = shortName;
     this.niceName = niceName;
     this.content = content;
-    this.inputType = inputType;     // 'text' or 'color'
-    this.repType = repType;         // 'rep' or 'css'
+    this.inputType = inputType;     // 'text' or 'color' or 'textarea'
+    this.repType = repType;         // 'rep' or 'css' or 'page'
 
     this.startString = "<!--START" + shortName + "-->";
     this.endString = "<!--" + shortName + "END-->";
@@ -97,6 +97,9 @@ function Replacement(shortName, niceName, content, inputType, repType) {
         var html = "<p>" + this.niceName + ":<input type='text' class='text userInput' value='" + this.content + "' id='" + this.shortName + "'></p>";
         if (this.inputType=='color') {
             html = "<p>" + this.niceName + ":<input type='text' class='color userInput'  value='" + this.content + "' id='" + this.shortName + "'></p>";
+        }
+        if (this.inputType=='textarea') {
+            html = "<p>" + this.niceName + ":<textarea class='userInput' id='" + this.shortName + "'>" + this.content + "</textarea></p>";
         }
         return html;
     };

@@ -15,9 +15,28 @@ function foo() {
 
 // Global vars
 var repsFoo = [];
+var pageRepsFoo = [];
 var htmlFoo = "";
+var fooStuff = "";
 
 function preview() {
+
+/*
+    var menuHtml = "<ul>";
+    for (var m=0; m<jstData.length; m++) {
+        menuHtml += "<li><a href='";
+        menuHtml += jstData["menu"][m]["relUrl"];
+        menuHtml += "'>";
+        menuHtml += jstData["menu"][m]["name"];
+        menuHtml += "</a></li>";
+    }
+    menuHtml += "</ul>";
+
+    var menuRep = new Replacement("menu", "Menu", menuHtml, "", "menu"];
+*/
+
+
+
 
     // Update repsFoo & make replacements into htmlFoo
     for (var i=0; i<repsFoo.length; i++) {
@@ -33,14 +52,18 @@ function preview() {
 
 function maliciousFish(fileText) {
     htmlFoo = fileText;
+
+    // Get data
     var jstDataString = getData(fileText);
 
+    // Parse data
     var jstData = JSON.parse(jstDataString);
     var reps = [];
+    var pageReps = [];
 
+    // Convert data to Replacement objects
     for (var j=0; j<jstData["replacements"].length; j++) {
         var r = new Replacement(jstData["replacements"][j]["shortName"], jstData["replacements"][j]["niceName"], "", jstData["replacements"][j]["inputType"], jstData["replacements"][j]["repType"]);
-
         r.getSetContent(fileText);
         reps.push(r);
     }
@@ -54,6 +77,7 @@ function maliciousFish(fileText) {
     output += "<button onclick='preview()'>Preview website</button>";
     document.getElementById('userInput').innerHTML = output;
 
+    // Initialize the new jscolor widgets
     var colorArray = getElementsByClassName(document, 'color');
     for (var k=0; k<colorArray.length; k++) {
         new jscolor.color(colorArray[k], {});
@@ -64,6 +88,7 @@ function squidAndSharks() {
 
     // Get files
     var files = document.getElementById('fileselect').files;
+    fooStuff = "";
 
     // For each file
     for (var i=0; i<files.length; i++) {
@@ -75,11 +100,12 @@ function squidAndSharks() {
             maliciousFish(fileContents);
         };
         reader.onerror = function(event) {
-            console.error("File could not be read! Code " + event.target.error.code);
+            alert("File could not be read! Code " + event.target.error.code);
         };
         reader.readAsText(files[i]);
     }
 }
+
 </script>
 
 </head>

@@ -70,8 +70,8 @@ function Replacement(shortName, niceName, content, inputType, repType) {
     this.shortName = shortName;
     this.niceName = niceName;
     this.content = content;
-    this.inputType = inputType;     // 'text' or 'color'
-    this.repType = repType;         // 'rep' or 'css'
+    this.inputType = inputType;     // 'text' or 'color' or 'textarea'
+    this.repType = repType;         // 'rep' or 'css' or 'page'
 
     this.startString = "<!--START" + shortName + "-->";
     this.endString = "<!--" + shortName + "END-->";
@@ -147,27 +147,5 @@ function SiteTemplate(templateName, html, maxMenus, defaultSiteReplacements, def
         }
         return htmlOut;
     };
-}
-
-/*
-      ****************************** FUNCTIONS TO ACT ON MODELS ******************************
-*/
-function removePage(menu, menuRank) {
-    var pagesArray = new Array();
-    for( var i=0; i<templateObj.pages.length; i++ ) {
-
-        // Leave out the page we're removing
-        if ( !(templateObj.pages[i].menu == menu && templateObj.pages[i].menuRank == menuRank) ) {
-
-            // If a page is in the same menu and has a higher menuRank than the one
-            // that is removed, subtract 1 from its menuRank
-            if( templateObj.pages[i].menu == menu && templateObj.pages[i].menuRank > menuRank ) {
-                templateObj.pages[i].menuRank -= 1;
-            }
-            pagesArray.push(templateObj.pages[i]);
-        }
-    }
-    templateObj.pages = pagesArray;
-    templateChosen();
 }
 
