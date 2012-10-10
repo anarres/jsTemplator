@@ -7,10 +7,13 @@
 <script type="text/javascript" src="betterSplit.js"></script>
 <script type="text/javascript" src="json_parse.js"></script>
 <script type="text/javascript" src="jscolor/jscolor.js"></script>
+
+<!--http://www.accessify.com/tools-and-wizards/developer-tools/html-javascript-convertor/-->
+<script type="text/javascript" src="defaultTemplate.js"></script>
 <script type="text/javascript">
 
-function foo() {
-    alert('foo!');
+function foo(x) {
+    alert(x);
 }
 
 // Global vars
@@ -20,7 +23,6 @@ var htmlFoo = "";
 var fooStuff = "";
 
 function preview() {
-
 /*
     var menuHtml = "<ul>";
     for (var m=0; m<jstData.length; m++) {
@@ -42,27 +44,25 @@ function preview() {
         }
         htmlFoo = replaceFoo(htmlFoo, repsFoo[i].startString, repsFoo[i].endString, repsFoo[i].content);
     }
-
-
     for (var r=0; r<pageRepsFoo.length; r++) {
         pageRepsFoo[r].content = document.getElementById(pageRepsFoo[r].shortName).value;
         htmlFoo = replaceFoo(htmlFoo, pageRepsFoo[r].startString, pageRepsFoo[r].endString, pageRepsFoo[r].content);
     }
-
-
-
     var htmlOut = "data:text/html;charset=utf-8, " + escape(htmlFoo);
     window.open(htmlOut, '_blank');
 }
 
 function maliciousFish(fileText) {
+
+    // Reset global var
     htmlFoo = fileText;
 
-    // Get data
+    // Get the data as a string
     var jstDataString = getData(fileText);
 
     // Parse data
     var jstData = JSON.parse(jstDataString);
+
     var reps = [];
     var pageReps = [];
 
@@ -72,6 +72,10 @@ function maliciousFish(fileText) {
         r.getSetContent(fileText);
         reps.push(r);
     }
+
+    // Generate user input widgets for...
+
+    // Whole site
     var output = "";
     for (var i=0; i<reps.length; i++) {
         if (reps[i].shortName.slice(0,4) != "menu") {
@@ -81,7 +85,7 @@ function maliciousFish(fileText) {
     repsFoo = reps;
     document.getElementById('userInput').innerHTML = output;
 
-    // Add the menu info
+    // Menu info
     pageOutput = "<p>Pages in this website: ";
     for (var n=0; n<jstData['menu'].length; n++) {
         pageOutput += jstData['menu'][n].name;
@@ -89,13 +93,13 @@ function maliciousFish(fileText) {
     }
     pageOutput += "</p>";
 
+    // Individual page
     for (var p=0; p<jstData['pageReplacements'].length; p++) {
         var pRep = new Replacement( jstData['pageReplacements'][p]["shortName"], jstData['pageReplacements'][p]["niceName"], "", jstData['pageReplacements'][p]["inputType"], jstData['pageReplacements'][p]["repType"]);
         pRep.getSetContent(fileText);
         pageReps.push(pRep);
     }
     pageRepsFoo = pageReps;
-
     for (var q=0; q<pageReps.length; q++) {
         pageOutput += pageReps[q].userInputHTML();
     }
@@ -111,7 +115,7 @@ function maliciousFish(fileText) {
     }
 }
 
-function squidAndSharks() {
+function onFileUpload() {
 
     // Get files
     var files = document.getElementById('fileselect').files;
@@ -134,7 +138,7 @@ function squidAndSharks() {
 }
 
 function newPage() {
-    foo();
+    foo(33333);
 }
 function toSiteView() {
     document.getElementById('page').style.visibility = "hidden";
@@ -145,11 +149,15 @@ function toPageView() {
     document.getElementById('page').style.visibility = "visible";
 }
 
+function beepStart() {
+    maliciousFish(htmlString);
+}
+
 </script>
 
 </head>
 
-<body>
+<body onload="beepStart()">
 
 <div id="container">
 
@@ -161,7 +169,7 @@ function toPageView() {
 
 <div>
 	<label for="fileselect">To work on an existing project, please upload project files:</label>
-	<input id="fileselect" name="fileselect[]" multiple="multiple" type="file" onchange="squidAndSharks()" />
+	<input id="fileselect" name="fileselect[]" multiple="multiple" type="file" onchange="onFileUpload()" />
 </div>
 
 <div id="wholeSite" style="position:absolute;visibility:visible;">
